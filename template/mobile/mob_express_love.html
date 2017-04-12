@@ -1,0 +1,219 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>选择表白/示爱对象</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no, address=no">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-touch-fullscreen" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script type="text/javascript" src="{$_W['siteroot']}app/resource/js/app/util.js"></script>
+    <script src="{$_W['siteroot']}app/resource/js/app/config.js"></script>
+    <!--<script src="{$_W['siteroot']}app/resource/js/require.js"></script>-->
+    <script type="text/javascript" src="{$_W['siteroot']}app/resource/js/lib/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="{$_W['siteroot']}app/resource/js/lib/mui.min.js"></script>
+    <script type="text/javascript" src="{$_W['siteroot']}app/resource/js/app/common.js"></script>
+    <script  type="text/javascript" src="../addons/haoman_dpm/imgs/js/wmPhone.js?r=8"></script>
+    <link rel="stylesheet" type="text/css" href="../addons/haoman_dpm/imgs/css/wmPhone.css?r=7"/>
+    <link rel="stylesheet" type="text/css" href="../addons/haoman_dpm/imgs/css/onWallPhone.css?r=24"/>
+    <script type="text/javascript">
+
+        window.sysinfo = {
+        {if !empty($_W['uniacid'])}'uniacid': '{$_W['uniacid']}',{/if}
+        {if !empty($_W['acid'])}'acid': '{$_W['acid']}',{/if}{if !empty($_W['openid'])}'openid': '{$_W['openid']}',{/if}
+        {if !empty($_W['uid'])}'uid': '{$_W['uid']}',{/if}
+        'siteroot': '{$_W['siteroot']}',
+                'siteurl': '{$_W['siteurl']}',
+                'attachurl': '{$_W['attachurl']}',
+                'attachurl_local': '{$_W['attachurl_local']}',
+                'attachurl_remote': '{$_W['attachurl_remote']}',
+        {if defined('MODULE_URL')}'MODULE_URL': '{MODULE_URL}',{/if}
+        'cookie' : {'pre': '{$_W['config']['cookie']['pre']}'}
+        };
+        // jssdk config 对象
+        jssdkconfig = {php echo json_encode($_W['account']['jssdkconfig']);} || {};
+        // 是否启用调试
+        jssdkconfig.debug = false;
+        jssdkconfig.jsApiList = [
+            'checkJsApi',
+            'onMenuShareTimeline',
+            'onMenuShareAppMessage',
+            'onMenuShareQQ',
+            'onMenuShareWeibo',
+            'hideMenuItems',
+            'showMenuItems',
+            'hideAllNonBaseMenuItem',
+            'showAllNonBaseMenuItem',
+            'translateVoice',
+            'startRecord',
+            'stopRecord',
+            'onRecordEnd',
+            'playVoice',
+            'pauseVoice',
+            'stopVoice',
+            'uploadVoice',
+            'downloadVoice',
+            'chooseImage',
+            'previewImage',
+            'uploadImage',
+            'downloadImage',
+            'getNetworkType',
+            'openLocation',
+            'getLocation',
+            'hideOptionMenu',
+            'showOptionMenu',
+            'closeWindow',
+            'scanQRCode',
+            'chooseWXPay',
+            'openProductSpecificView',
+            'addCard',
+            'chooseCard',
+            'openCard'
+        ];
+
+    </script>
+
+    <script>
+        var go_moreUsers = "{php echo $this->createMobileUrl("moreUsers", array('rid' => $rid,'uid'=>$fans['from_user']))}";
+
+        var is_opened=0;
+        var isAdmin=0;
+        var isback=0;
+        var ismbp=0;
+        var hbtype=0;//红包类型，0可以提现，1不可以提现。
+        var rootimg = "{$_W['attachurl']}";
+        var keyword ={$keyword};
+        var bp_listword ={$bp_listword};
+        var dsData ={$dsData};
+        var arr ={$arr};
+    </script>
+    <!--<script type="text/javascript" src="../addons/haoman_dpm/common/jquery-1.9.1.min.js"></script>-->
+    <script type="text/javascript" src="../addons/haoman_dpm/imgs/js/mzh.funlink.min.js"></script>
+    <script type="text/javascript" src="../addons/haoman_dpm/imgs/js/fastclick.min.js"></script>
+
+    <link href="../addons/haoman_dpm/imgs/css/common.mzh.css" rel="stylesheet">
+    <link href="../addons/haoman_dpm/imgs/css/am_icon.css" rel="stylesheet">
+
+</head>
+<body>
+<script type="text/javascript" src="../addons/haoman_dpm/imgs/js/index_love.min.js"></script>
+<!--<script type="text/javascript" src="/app/resource/components/LocalResizeIMG/lrz.bundle.js"></script>-->
+
+<link href="../addons/haoman_dpm/imgs/css/index_love.css" rel="stylesheet" type="text/css"/>
+<div id="main_body">
+    <div class="user-filter">
+        <div class="user-filter-item active">
+            <span class="user-filter-text user-filter-icon-all" onclick="refresh_user_list(0, this);"> 全部</span>
+        </div>
+        <div class="user-filter-item">
+            <span class="user-filter-text user-filter-icon-male" onclick="refresh_user_list(1, this);"> 男生</span>
+        </div>
+        <div class="user-filter-item">
+            <span class="user-filter-text user-filter-icon-female" onclick="refresh_user_list(2, this);"> 女生</span>
+        </div>
+    </div>
+    <div class="user_panel">
+        <div class="user-list">
+        </div>
+        <div class="loading"><i class="am-icon-spinner am-icon-pulse"></i> <span>加载中…</span></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+                express_love_direct({"id":"74400","weid":"421","uid":"114823","lasttime":"1488974973","createtime":"1487082073","status":"0","age":null,"qd_time":null,"stealth":"0","avatar":"http:\/\/wx.qlogo.cn\/mmopen\/Q3auHgzwzM792DjxjfXNfiaMe96GqcPOGccxdk88FEyFc5kR5vuUEQGYzib7gosy07X5CSBJMeMa3VLBTYaaH8F0BMNriaa4fV0MLaUP6tzoNs\/132","face_val":null,"privilege":null,"msg_tip":null,"nickname":"Jessica","sex":"2","present":false});
+        $('.user-filter-item:eq(0) span').trigger('click');
+            });
+</script>
+
+<div class="mzh_modal_alert el_panel">
+    <div class="mzh_modal_alert_dialog" style="width: 90vw">
+        <div class="mzh_modal_alert_title">表白主题 <span class="am-icon-close close"></span></div>
+        <div class="mzh_modal_alert_body">
+            <div class="fl-slide-content">
+            <div class="fl-slide-panel">
+                <div class="fl-el-item" data-id="2515" data-content="漫天花雨,只为浪漫我和你" data-image="http://91youyu.oss-cn-shenzhen.aliyuncs.com/static/express_love/images/image_default.png">
+                    <img src="http://91youyu.oss-cn-shenzhen.aliyuncs.com/static/express_love/images/thumb_1.png" class="fl-el-item-img"/>
+                    <p class="fl-el-item-name">漫天花雨</p>
+                    <div class="fl-el-item-mask"></div>
+                </div>
+                                <div class="fl-el-item" data-id="2516" data-content="你心我心, 融为一心" data-image="http://91youyu.oss-cn-shenzhen.aliyuncs.com/static/express_love/images/image_default.png">
+                    <img src="http://91youyu.oss-cn-shenzhen.aliyuncs.com/static/express_love/images/thumb_2.png" class="fl-el-item-img"/>
+                    <p class="fl-el-item-name">甜言蜜语</p>
+                    <div class="fl-el-item-mask"></div>
+                </div>
+                                <div class="fl-el-item" data-id="2517" data-content="除了你以外,世界不存在" data-image="http://91youyu.oss-cn-shenzhen.aliyuncs.com/static/express_love/images/image_default.png">
+                    <img src="http://91youyu.oss-cn-shenzhen.aliyuncs.com/static/express_love/images/thumb_3.png" class="fl-el-item-img"/>
+                    <p class="fl-el-item-name">激情如火</p>
+                    <div class="fl-el-item-mask"></div>
+                </div>
+                                <div class="fl-el-item" data-id="2518" data-content="一颗不变心, 爱你到永远" data-image="http://91youyu.oss-cn-shenzhen.aliyuncs.com/static/express_love/images/image_default.png">
+                    <img src="http://91youyu.oss-cn-shenzhen.aliyuncs.com/static/express_love/images/thumb_4.png" class="fl-el-item-img"/>
+                    <p class="fl-el-item-name">水晶之恋</p>
+                    <div class="fl-el-item-mask"></div>
+                </div>
+                                <div class="fl-el-item" data-id="2519" data-content="愿得一人心, 白首不分离" data-image="http://91youyu.oss-cn-shenzhen.aliyuncs.com/static/express_love/images/image_default.png">
+                    <img src="http://91youyu.oss-cn-shenzhen.aliyuncs.com/static/express_love/images/thumb_5.png" class="fl-el-item-img"/>
+                    <p class="fl-el-item-name">浪漫相伴</p>
+                    <div class="fl-el-item-mask"></div>
+                </div>
+                                <div class="fl-el-item" data-id="2520" data-content="你是我心底永远的朱砂痣" data-image="http://91youyu.oss-cn-shenzhen.aliyuncs.com/static/express_love/images/image_default.png">
+                    <img src="http://91youyu.oss-cn-shenzhen.aliyuncs.com/static/express_love/images/thumb_6.png" class="fl-el-item-img"/>
+                    <p class="fl-el-item-name">爱的表白</p>
+                    <div class="fl-el-item-mask"></div>
+                </div>
+                            </div>
+        </div>
+            <div class="fl-slide-el-text">
+                <span class="el-image-upload">
+                    <img class="el-image-preview" src="../addons/haoman_dpm/imgs/upload.png"/>
+                    <input id="upload" class="photo_file" type="file" name="upload" accept="image/*" capture="camera"/>
+                    <input type="hidden" name="image" id="image"/>
+                </span>
+                <textarea class="el-love-letter" placeholder="表白内容(限30字以内)" maxlength="30" name="love_letter" id="love_letter"></textarea>
+            </div>
+            <div class="fl-slide-el-text">
+                                <span class="el-item-option selected" data-id="2096" data-fee="40.000">
+                    20秒/￥40.00                </span>
+                                <span class="el-item-option " data-id="2097" data-fee="60.000">
+                    30秒/￥60.00                </span>
+                                <span class="el-item-option " data-id="2098" data-fee="104.000">
+                    52秒/￥104.00                </span>
+                                <span class="el-item-option " data-id="2099" data-fee="520.000">
+                    520秒/￥520.00                </span>
+                                <span class="el-item-option " data-id="2100" data-fee="1314.000">
+                    1314秒/￥1314.00                </span>
+                            </div>
+            <p>￥<span class="fl-strong el-price">40.00</span> ，表白<span class="fl-strong el-lover-name"></span></p>
+                    </div>
+        <div class="mzh_modal_alert_footer">
+            <a class="mzh_btn_cancel" id="el-back-btn">返&nbsp;回</a>
+            <a class="mzh_btn_confirm" id="el-confirm-btn">表&nbsp;白</a>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var express_love_form_url = './index.php?i=421&c=entry&do=submit&m=funlink_express_love';
+    var token = "7083";
+    $(function () {
+        $('#upload').upload_image(function(node_url){
+            $('.el-image-preview').attr('src', rootimg+mnode_url);
+
+            $('#image').val(rootimg+node_url);
+            $.loadingModal(false);
+        });
+
+        lover.item_id = 2096 || 0;
+    });
+</script>
+
+</body>
+</html>

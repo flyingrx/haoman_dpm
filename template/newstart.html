@@ -1,0 +1,313 @@
+{template 'common/header'}
+<div class="main">
+	<ul class="nav nav-tabs">
+	    <li class="active"><a  href="#">设置开关</a></li>
+	</ul>
+
+	<div class="panel panel-default">
+		<div class="panel-body">
+		<form action="" method="post" class=" form" enctype="multipart/form-data">
+			<input type="hidden" name="reply_id" value="{$reply['rid']}" />
+			<input type="hidden" name="id" value="{$reply['id']}" />
+			<input type="hidden" name="yyyid" value="{$yyy['id']}" />
+			<input type="hidden" name="xysid" value="{$xys['id']}" />
+			<input type="hidden" name="bpid" value="{$bp['id']}" />
+			<input type="hidden" name="xyhid" value="{$xyh['id']}" />
+			<input type="hidden" name="cjxid" value="{$cjx['id']}" />
+			<input type="hidden" name="fhbid" value="{$fanshb['id']}" />
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">是否开启开幕墙</label>
+				<div class="col-sm-9">
+					<label class="radio-inline">
+						<input type="radio" name="timenum" value="0" {if $reply['timenum']==0} checked="checked"{/if}/>开启
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="timenum" value="1" {if $reply['timenum']==1} checked="checked"{/if}/>关闭
+					</label>
+					<div class="help-block">默认开启。</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">手机端消息</label>
+				<div class="col-sm-9">
+					<label class="radio-inline">
+						<input type="radio" name="ismessage" value="0" {if $reply['ismessage']==0} checked="checked"{/if}/>默认
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="ismessage" value="1" {if $reply['ismessage']==1} checked="checked"{/if}/>聊天界面
+					</label>
+					<div class="help-block">手机端消息页面的样式，聊天:类似QQ群聊</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">是否开启3d签到</label>
+				<div class="col-sm-9">
+					<label class="radio-inline">
+						<input type="radio" name="isqd" value="0" {if $reply['isqd']==0} checked="checked"{/if}/>开启随机切换模式(包含LOGO和文字)
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="isqd" value="3" {if $reply['isqd']==3} checked="checked"{/if}/>开启随机切换模式(不包含LOGO和文字)
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="isqd" value="2" {if $reply['isqd']==2} checked="checked"{/if}/>开启固定显示模式
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="isqd" value="1" {if $reply['isqd']==1} checked="checked"{/if}/>关闭
+					</label>
+					<div class="help-block">默认开启。</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">是否开启抽奖</label>
+				<div class="col-sm-9">
+					<label class="radio-inline">
+						<input type="radio" name="ischoujiang" value="0" {if $reply['ischoujiang']==0} checked="checked"{/if}/>开启3D模式
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="ischoujiang" value="2" {if $reply['ischoujiang']==2} checked="checked"{/if}/>开启普通模式
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="ischoujiang" value="1" {if $reply['ischoujiang']==1} checked="checked"{/if}/>关闭
+					</label>
+					<div class="help-block">默认开启。</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">是否开启大屏幕红包</label>
+				<div class="col-sm-9">
+					<label class="radio-inline">
+						<input type="radio" name="isqhb" value="0" {if $reply['isqhb']==0} checked="checked"{/if}/>开启咻一咻红包
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="isqhb" value="2" {if $reply['isqhb']==2} checked="checked"{/if}/>开启摇一摇红包
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="isqhb" value="1" {if $reply['isqhb']==1} checked="checked"{/if}/>关闭
+					</label>
+					<div class="help-block">默认开启。</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">是否开启嘉宾</label>
+				<div class="col-sm-9">
+					<label class="radio-inline">
+						<input type="radio" name="isjiabin" value="0" {if $reply['isjiabin']==0} checked="checked"{/if}/>开启
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="isjiabin" value="1" {if $reply['isjiabin']==1} checked="checked"{/if}/>关闭
+					</label>
+					<div class="help-block">默认开启。</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">是否开启闭幕墙</label>
+				<div class="col-sm-9">
+					<label class="radio-inline">
+						<input type="radio" name="share_type" value="0" {if $reply['share_type']==0} checked="checked"{/if}/>开启
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="share_type" value="1" {if $reply['share_type']==1} checked="checked"{/if}/>关闭
+					</label>
+					<div class="help-block">默认开启。</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">是否开启投票</label>
+				<div class="col-sm-9">
+					<label class="radio-inline">
+						<input type="radio" name="istoupiao" value="0" {if $reply['istoupiao']==0} checked="checked"{/if}/>开启
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="istoupiao" value="1" {if $reply['istoupiao']==1} checked="checked"{/if}/>关闭
+					</label>
+					<div class="help-block">默认开启。</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">是否开启报名</label>
+				<div class="col-sm-9">
+					<label class="radio-inline">
+						<input type="radio" name="isbaoming" value="0" {if $reply['isbaoming']==0} checked="checked"{/if}/>关闭
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="isbaoming" onclick="alert('确定开启报名模式！')" value="1" {if $reply['isbaoming']==1} checked="checked"{/if}/>开启
+					</label>
+					<div class="help-block">默认关闭。</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">是否开启摇一摇</label>
+				<div class="col-sm-9">
+					<label class="radio-inline">
+						<input type="radio" name="isyyy" value="0" {if $yyy['isyyy']==0} checked="checked"{/if}/>开启
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="isyyy" value="1" {if $yyy['isyyy']==1} checked="checked"{/if}/>关闭
+					</label>
+					<div class="help-block">默认开启。<span style="color: red">玩这个功能的系统最好必须都是liunx系统</span></div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">是否开启许愿树</label>
+				<div class="col-sm-9">
+					<label class="radio-inline">
+						<input type="radio" name="isxys" value="0" {if $xys['isxys']==0} checked="checked"{/if}/>开启
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="isxys" value="1" {if $xys['isxys']==1} checked="checked"{/if}/>关闭
+					</label>
+					<div class="help-block">默认开启。</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">是否开启霸屏</label>
+				<div class="col-sm-9">
+					<label class="radio-inline">
+						<input type="radio" name="isbp" value="0" {if $bp['isbp']==0} checked="checked"{/if}/>关闭
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="isbp" value="1" {if $bp['isbp']==1} checked="checked"{/if}/>开启
+					</label>
+					<div class="help-block">默认关闭。<span style="color: red">必须要开通支付</span></div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">是否开启打赏</label>
+				<div class="col-sm-9">
+					<label class="radio-inline">
+						<input type="radio" name="isds" value="0" {if $bp['isds']==0} checked="checked"{/if}/>关闭
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="isds" value="1" {if $bp['isds']==1} checked="checked"{/if}/>开启
+					</label>
+					<div class="help-block">默认关闭。<span style="color: red">必须要开通支付</span></div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">是否开启小视频</label>
+				<div class="col-sm-9">
+					<label class="radio-inline">
+						<input type="radio" name="isvo" value="0" {if $bp['isvo']==0} checked="checked"{/if}/>关闭
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="isvo" value="1" {if $bp['isvo']==1} checked="checked"{/if}/>开启
+					</label>
+					<div class="help-block">默认关闭。<span style="color: red">必须要开通支付</span></div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">是否开启手机顶部霸屏</label>
+				<div class="col-sm-9">
+					<label class="radio-inline">
+						<input type="radio" name="ismbp" value="0" {if $bp['ismbp']==0} checked="checked"{/if}/>关闭
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="ismbp" value="1" {if $bp['ismbp']==1} checked="checked"{/if}/>开启
+					</label>
+					<div class="help-block">默认关闭。<span style="color: red"></span></div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">是否开启对对碰</label>
+				<div class="col-sm-9">
+					<label class="radio-inline">
+						<input type="radio" name="is_pair" value="0" {if $xys['is_pair']==0} checked="checked"{/if}/>开启
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="is_pair" value="1" {if $xys['is_pair']==1} checked="checked"{/if}/>关闭
+					</label>
+					<div class="help-block">默认开启。</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">是否开启大转盘</label>
+				<div class="col-sm-9">
+					<label class="radio-inline">
+						<input type="radio" name="is_turntable" value="0" {if $xys['is_turntable']==0} checked="checked"{/if}/>开启
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="is_turntable" value="1" {if $xys['is_turntable']==1} checked="checked"{/if}/>关闭
+					</label>
+					<div class="help-block">默认开启。</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">是否开启幸运号码</label>
+				<div class="col-sm-9">
+					<label class="radio-inline">
+						<input type="radio" name="is_xyh" value="0" {if $xyh['is_xyh']==0} checked="checked"{/if}/>开启
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="is_xyh" value="1" {if $xyh['is_xyh']==1} checked="checked"{/if}/>关闭
+					</label>
+					<div class="help-block">默认开启。</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">是否开启幸运手机号码</label>
+				<div class="col-sm-9">
+					<label class="radio-inline">
+						<input type="radio" name="is_xysjh" value="0" {if $xyh['is_xysjh']==0} checked="checked"{/if}/>开启
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="is_xysjh" value="1" {if $xyh['is_xysjh']==1} checked="checked"{/if}/>不开启
+					</label>
+					<div class="help-block">默认开启。</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">是否开启抽奖箱</label>
+				<div class="col-sm-9">
+					<label class="radio-inline">
+						<input type="radio" name="isCjxStart" value="0" {if $cjx['isCjxStart']==0} checked="checked"{/if}/>开启
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="isCjxStart" value="1" {if $cjx['isCjxStart']==1} checked="checked"{/if}/>关闭
+					</label>
+					<div class="help-block">默认开启。</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">是否开启粉丝发红包</label>
+				<div class="col-sm-9">
+					<label class="radio-inline">
+						<input type="radio" name="isfanshb" value="0" {if $fanshb['isfanshb']==0} checked="checked"{/if}/>关闭
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="isfanshb" value="1" {if $fanshb['isfanshb']==1} checked="checked"{/if}/>开启
+					</label>
+					<div class="help-block">默认关闭。</div>
+				</div>
+			</div>
+			<div class="form-group col-sm-12">
+            <input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
+            <input type="hidden" name="op" value="updataad" />
+        	</div>
+
+		</form>
+		</div>
+	</div>
+
+
+</div>
+<!-- <div id="queding" class="hide">
+	<span class="pull-right btn btn-primary" id="chengaddd" onclick="abc()">确定</span>
+</div> -->
+<script>
+	require(['bootstrap'],function($){
+		$('.btn').hover(function(){
+			$(this).tooltip('show');
+		},function(){
+			$(this).tooltip('hide');
+		});
+	});
+
+</script>
+<script>
+function drop_confirm(msg, url){
+    if(confirm(msg)){
+        window.location = url;
+    }
+}
+</script>
+{template 'common/footer'}

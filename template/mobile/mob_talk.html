@@ -1,0 +1,167 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>{$reply['mobtitle']}大屏幕</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no, address=no">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-touch-fullscreen" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script type="text/javascript" src="{$_W['siteroot']}app/resource/js/app/util.js"></script>
+    <script src="{$_W['siteroot']}app/resource/js/app/config.js"></script>
+    <!--<script src="{$_W['siteroot']}app/resource/js/require.js"></script>-->
+    <script type="text/javascript" src="{$_W['siteroot']}app/resource/js/lib/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="{$_W['siteroot']}app/resource/js/lib/mui.min.js"></script>
+    <script type="text/javascript" src="{$_W['siteroot']}app/resource/js/app/common.js"></script>
+    <script  type="text/javascript" src="../addons/haoman_dpm/imgs/js/wmPhone.js?r=8"></script>
+    <link rel="stylesheet" type="text/css" href="../addons/haoman_dpm/imgs/css/wmPhone.css?r=7"/>
+    <link rel="stylesheet" type="text/css" href="../addons/haoman_dpm/imgs/css/onWallPhone.css?r=24"/>
+    <script type="text/javascript">
+
+        window.sysinfo = {
+        {if !empty($_W['uniacid'])}'uniacid': '{$_W['uniacid']}',{/if}
+        {if !empty($_W['acid'])}'acid': '{$_W['acid']}',{/if}{if !empty($_W['openid'])}'openid': '{$_W['openid']}',{/if}
+        {if !empty($_W['uid'])}'uid': '{$_W['uid']}',{/if}
+        'siteroot': '{$_W['siteroot']}',
+                'siteurl': '{$_W['siteurl']}',
+                'attachurl': '{$_W['attachurl']}',
+                'attachurl_local': '{$_W['attachurl_local']}',
+                'attachurl_remote': '{$_W['attachurl_remote']}',
+        {if defined('MODULE_URL')}'MODULE_URL': '{MODULE_URL}',{/if}
+        'cookie' : {'pre': '{$_W['config']['cookie']['pre']}'}
+        };
+        // jssdk config 对象
+        jssdkconfig = {php echo json_encode($_W['account']['jssdkconfig']);} || {};
+        // 是否启用调试
+        jssdkconfig.debug = false;
+        jssdkconfig.jsApiList = [
+            'checkJsApi',
+            'onMenuShareTimeline',
+            'onMenuShareAppMessage',
+            'onMenuShareQQ',
+            'onMenuShareWeibo',
+            'hideMenuItems',
+            'showMenuItems',
+            'hideAllNonBaseMenuItem',
+            'showAllNonBaseMenuItem',
+            'translateVoice',
+            'startRecord',
+            'stopRecord',
+            'onRecordEnd',
+            'playVoice',
+            'pauseVoice',
+            'stopVoice',
+            'uploadVoice',
+            'downloadVoice',
+            'chooseImage',
+            'previewImage',
+            'uploadImage',
+            'downloadImage',
+            'getNetworkType',
+            'openLocation',
+            'getLocation',
+            'hideOptionMenu',
+            'showOptionMenu',
+            'closeWindow',
+            'scanQRCode',
+            'chooseWXPay',
+            'openProductSpecificView',
+            'addCard',
+            'chooseCard',
+            'openCard'
+        ];
+
+    </script>
+
+
+    <!--<script type="text/javascript" src="../addons/haoman_dpm/common/jquery-1.9.1.min.js"></script>-->
+    <script type="text/javascript" src="../addons/haoman_dpm/imgs/js/mzh.funlink.min.js"></script>
+    <script type="text/javascript" src="../addons/haoman_dpm/imgs/js/fastclick.min.js"></script>
+
+    <link href="../addons/haoman_dpm/imgs/css/common.mzh.css" rel="stylesheet">
+    <link href="../addons/haoman_dpm/imgs/css/am_icon.css" rel="stylesheet">
+
+</head>
+<body>
+<link rel="stylesheet" type="text/css" href="../addons/haoman_dpm/imgs/css/index.css?v=2234"/>
+<script type="text/javascript" src="../addons/haoman_dpm/imgs/js/index.min.js?v=23323"></script>
+<script type="text/javascript" src="../addons/haoman_dpm/imgs/js/talk.min.js"></script>
+<script type="text/javascript" src="../addons/haoman_dpm/imgs/js/smile.min.js"></script>
+<!--<script type="text/javascript" src="../addons/haoman_dpm/imgs/js/lrz.bundle.js"></script>-->
+<script src="../addons/haoman_dpm/mobimg/lrz.mobile.min.js"></script>
+<script src="../addons/haoman_dpm/mobimg/lrz.all.bundle.js"></script>
+<!--<script type="text/javascript" src="/app/resource/components/plupload/plupload.full.min.js"></script>-->
+<script>maxid = 0;</script>
+<body>
+<div id="main_body">
+    <div class="talk_panel" style="">
+    <!--<script>var uid = 345977;var maxid = 0;</script>-->
+    <link href="../addons/haoman_dpm/imgs/css/talk.css" rel="stylesheet" type="text/css"/>
+    <!--<script type="text/javascript" src="/app/resource/components/LocalResizeIMG/lrz.bundle.js"></script>-->
+    <div class="talk_main">
+        <div class="talker_info" style="background-image: url('../addons/haoman_dpm/imgs/top_bg.png')">
+            <div class="avatar" style="background-image: url('http://wx.qlogo.cn/mmopen/lRNXgCtFOXSlDeL6N1hFRAAGW0oib3MLDHagDnYQB27nfTHNIrxrFIHuXmofQVulic1hEey9JF839BjFgcWq6hxpz7mZSyGOmX/132?x-oss-process=style/avatar')"></div>
+            <div class="scoll_show">
+                <div class="nickname">Pakho8ZHAO</div>
+                <div class="talker_tags man">
+                    <span class="gender">帅哥</span>
+                  </div>
+            </div>
+            <span class="close am-icon-times-circle"></span>
+        </div>
+        <div class="msg_list" style="height: 100vh;">
+            <div class="msg_list_ctx">
+                                <script>
+    maxid = 0;
+</script>
+            </div>
+        </div>
+        <div class="msg_input">
+            <span class="menu_btn am-icon-plus-circle"></span>
+            <div class="input_line">
+                <textarea class="msg_input_box"></textarea>
+                <span class="am-icon-smile-o smile_btn" ></span>
+                <span class="send_btn">发送</span>
+            </div>
+            <div class="msg_input_menu">
+                <ul>
+                    <li>
+                        <span class="icon iconfont icon-zhaopian  photo" ></span>
+                        <p>相片</p>
+                        <input id="upload" class="photo_file" type="file" name="upload" accept="image/*" capture="camera">
+                    </li>
+                    <li>
+                        <span class="icon iconfont icon-chexiao clean_msg" ></span>
+                        <p>清空记录</p>
+                    </li><!-- accept="image/jpg, image/jpeg, image/png"-->
+                    <!--<li><img src="/app/themes/flink/wall/img/icon/hb.png"/></li>
+                    <li><img src="/app/themes/flink/wall/img/icon/mp.png"/></li>-->
+                </ul>
+            </div>
+            <div class="msg_input_face">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</div>
+<script>
+    $(function(){
+        $(".talk_panel").party_talk_panel(345977);
+        $(".talk_panel .close").click(function(){
+                            history.go(-1);
+                    });
+    })
+</script>
+</body>
+
+</body>
+</html>

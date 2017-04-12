@@ -1,0 +1,111 @@
+{template 'common/header'}
+<div class="main">
+	<ul class="nav nav-tabs">
+		{if $turntable == 1}
+	    <li><a  href="{php echo $this->createWebUrl('fansvip');}">粉丝VIP管理</a></li>
+    	{/if}
+	    <li class="active"><a  href="#">添加规则</a></li>
+	</ul>
+
+	<div class="panel panel-default">
+		<div class="panel-body">
+		<form action="" method="post" class=" form" enctype="multipart/form-data">
+			<div class="form-group">
+
+				<label for="level" class="control-label">VIP级别:</label>
+				<div class="input-group">
+					<input type="number" class="form-control" name="level" value="">
+					<span class="input-group-addon" >级</span>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="money" class="control-label">累积消费金额:</label>
+				<div class="input-group">
+				<input type="text" class="form-control" name="money" value="">
+					<span class="input-group-addon" >元</span>
+				</div>
+
+				<div class="help-block">VIP等级对应的金额，最小0.01元</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label" style="margin-right: 15px;">状态</label>
+					<label class="radio-inline">
+						<input type="radio" name="status" value="0" {if $reply['status']==0} checked="checked"{/if}/>正常
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="status" value="1" {if $reply['status']==1} checked="checked"{/if}/>禁用
+					</label>
+			</div>
+			<div class="form-group">
+				<label class="control-label">适用规则</label>
+				<div class="">
+					<select name="rulename" class="form-control" required="required" id="rulename">
+						{loop $rowlist $row}
+						<option value="{$row['id']}">{$row['name']}</option>
+						{/loop}
+					</select>
+				</div>
+			</div>
+			<div class="form-group col-sm-12">
+            <input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
+            <input type="hidden" name="op" value="addad" />
+        	</div>
+		</div>
+	</div>
+	</form>
+
+</div>
+<!-- <div id="queding" class="hide">
+	<span class="pull-right btn btn-primary" id="chengaddd" onclick="abc()">确定</span>
+</div> -->
+<script>
+	require(['bootstrap'],function($){
+		$('.btn').hover(function(){
+			$(this).tooltip('show');
+		},function(){
+			$(this).tooltip('hide');
+		});
+	});
+
+
+$(function(){
+
+    $(".check_all").click(function(){
+       var checked = $(this).get(0).checked;
+
+       $("input[type=checkbox]").attr("checked",checked);
+    });
+	$("input[name=deleteall]").click(function(){
+		var check = $("input:checked");
+
+		if(check.length<2){
+			alert('请选择要删除的记录!');
+			return false;
+		}
+        if( confirm("确认要删除选择的记录?")){
+			var id = new Array();
+			check.each(function(i){
+				id[i] = $(this).val();
+			});
+			$.post("{php echo $this->createWebUrl('deleteAllcard')}", {idArr:id},function(data){
+				if (data.errno ==0)
+				{
+					location.reload();
+				} else {
+					alert(data.error);
+				}
+			},'json');
+		}
+
+	});
+});
+</script>
+<script>
+function drop_confirm(msg, url){
+    if(confirm(msg)){
+        window.location = url;
+    }
+}
+</script>
+{template 'common/footer'}

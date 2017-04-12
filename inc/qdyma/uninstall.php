@@ -1,0 +1,42 @@
+<?php
+
+$sql =<<<EOF
+DROP TABLE IF EXISTS `ims_haoman_dpm_addad`;
+DROP TABLE IF EXISTS `ims_haoman_dpm_award`;
+DROP TABLE IF EXISTS `ims_haoman_dpm_bpadmin`;
+DROP TABLE IF EXISTS `ims_haoman_dpm_bpmoney`;
+DROP TABLE IF EXISTS `ims_haoman_dpm_bpreply`;
+DROP TABLE IF EXISTS `ims_haoman_dpm_cardticket`;
+DROP TABLE IF EXISTS `ims_haoman_dpm_cash`;
+DROP TABLE IF EXISTS `ims_haoman_dpm_cjxreply`;
+DROP TABLE IF EXISTS `ims_haoman_dpm_data`;
+DROP TABLE IF EXISTS `ims_haoman_dpm_draw_default`;
+DROP TABLE IF EXISTS `ims_haoman_dpm_ds_pay_order`;
+DROP TABLE IF EXISTS `ims_haoman_dpm_ds_reply`;
+DROP TABLE IF EXISTS `ims_haoman_dpm_fans`;
+DROP TABLE IF EXISTS `ims_haoman_dpm_guest`;
+DROP TABLE IF EXISTS `ims_haoman_dpm_hb`;
+DROP TABLE IF EXISTS `ims_haoman_dpm_hb_award`;
+DROP TABLE IF EXISTS `ims_haoman_dpm_hb_log`;
+DROP TABLE IF EXISTS `ims_haoman_dpm_hb_setting`;
+DROP TABLE IF EXISTS `ims_haoman_dpm_jiabing`;
+DROP TABLE IF EXISTS `ims_haoman_dpm_jiequan`;
+DROP TABLE IF EXISTS `ims_haoman_dpm_messages`;
+DROP TABLE IF EXISTS `ims_haoman_dpm_mp4`;
+DROP TABLE IF EXISTS `ims_haoman_dpm_notifications`;
+DROP TABLE IF EXISTS `ims_haoman_dpm_pair_combination`;
+DROP TABLE IF EXISTS `ims_haoman_dpm_password`;
+DROP TABLE IF EXISTS `ims_haoman_dpm_pay_order`;
+DROP TABLE IF EXISTS `ims_haoman_dpm_pici`;
+DROP TABLE IF EXISTS `ims_haoman_dpm_prize`;
+DROP TABLE IF EXISTS `ims_haoman_dpm_reply`;
+DROP TABLE IF EXISTS `ims_haoman_dpm_toupiao`;
+DROP TABLE IF EXISTS `ims_haoman_dpm_tp_log`;
+DROP TABLE IF EXISTS `ims_haoman_dpm_whyerror`;
+DROP TABLE IF EXISTS `ims_haoman_dpm_xyhm`;
+DROP TABLE IF EXISTS `ims_haoman_dpm_xyhreply`;
+DROP TABLE IF EXISTS `ims_haoman_dpm_xysreply`;
+DROP TABLE IF EXISTS `ims_haoman_dpm_yyyreply`;
+DROP TABLE IF EXISTS `ims_haoman_dpm_yyyuser`;
+EOF;
+pdo_run($sql);
