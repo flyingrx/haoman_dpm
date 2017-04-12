@@ -439,6 +439,10 @@ class haoman_dpmModuleSite extends WeModuleSite {
 	public function doMobiledpm_getchoujiang(){ 
 		$this->__mobile(__FUNCTION__);
     }
+//vip登陆轮询
+    public function doMobiledpm_vip_login(){
+        $this->__mobile(__FUNCTION__);
+    }
 
      //02.24新增抽奖箱开始
     public function doMobiledpm_cjx(){ 
@@ -1353,11 +1357,6 @@ class haoman_dpmModuleSite extends WeModuleSite {
         $parms[':transid'] = $transid;
         $exits = pdo_fetch($sql,$parms);
         $exitss = pdo_fetch($sql2,$parms);
-
-
-
-        
-
 
         if($exits&&$exits['pay_type']==0){
             //报名

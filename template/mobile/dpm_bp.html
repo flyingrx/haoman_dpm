@@ -1567,12 +1567,21 @@
         <div class="allCover"></div>
         {if empty($video['vodio_bg11'])}<img class="onWallBg" src="{$bg}">{/if}
         <div class="all">
-            <div class="onWallHead" style="position: relative">
+            <div class="onWallHead" style="position: relative;height: 10%;">
                 <div>{$bpreply['bp_title']}</div>
-                <div class="welcome" style="position: fixed;top: 10%;left: .5rem;z-index: 9999;">
-                    <img src="../addons/haoman_dpm/imgs/car.gif" alt="跑车图片" width="320" height="120">
-                    <p>欢迎尊敬的VIP：XXX 光临</p>
+                <div class="welcome" style="opacity: 1;position: fixed;top: 40px;z-index: 10;">
+                    <img class='car' style="position: absolute;right: 0;" src="../addons/haoman_dpm/imgs/car.gif" alt="跑车图片" width="320" height="120">
+                    <p class="vip_welcome">欢迎尊敬的VIP：XXX 光临</p>
                 </div>
+                <script>
+                	(function(){
+                		$('.car').animate({
+                			right:'100%'
+                		},5000,function(){
+                			$('.vip_welcome').fadeOut();
+                		})
+                	})()
+                </script>
             </div>
             <div class="onWallMain">
                 <div class="main">
