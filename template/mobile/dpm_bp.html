@@ -869,6 +869,21 @@
     var randoms = [0];
     var last_id = 0;
 
+    var vip_login = [];
+    var ajax_vip = function () {
+        $.ajax({
+            type:'POST',
+            url:"",
+            success:function (result) {
+                if(result.isResultTrue){
+                    vip_login.push(result.resultMsg);
+                    while(vip_login.length){
+                        showcar(vip_login['nickname'],vip_login['avatar'],vip_login['level']);
+                    }
+                }
+            }
+        })
+    }
     var ajax_getData = function(callback, fnc) {
         $.ajax({
             type: 'POST',
@@ -920,7 +935,7 @@
                             bptime = date;
                         }
                     }
-                   
+
                     if (delNum != now) {
 
                         now = delNum;
@@ -1430,7 +1445,7 @@
                 }
                 $('#rich').fadeIn().addClass('show');
 
-               
+
                 if (isOpenAudio == 'true'){
                     audio.play(audio.src[dt.type == 'ds' ? 1 : 0]);
                 }
