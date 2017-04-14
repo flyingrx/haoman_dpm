@@ -18,7 +18,13 @@
     <script src="../addons/haoman_dpm/bapinimg/stars.js"></script>
     <link rel="stylesheet" href="../addons/haoman_dpm/bapinimg/style.css?v=3213">
     <link href="../addons/haoman_dpm/bapinimg/reward.css?v=32312313" rel="stylesheet" type="text/css">
-   
+    <style>
+        .welcome{opacity: 1;position: fixed;top: 40px;z-index: 10;height: 100%;width: 100%}
+        #car{position: absolute;right: -320px;top:30%;text-align: center;}
+        .vip_welcome{font-size: 20px;color: red;overflow: hidden;white-space: nowrap;}
+        .vip_welcome>img{vertical-align: middle;width: 60px;height: 60px;border-radius: 50%}
+        #vip_level{font: inherit;color: inherit;}
+    </style>
     <script>
     /*音频js*/
     var audio = {
@@ -868,22 +874,61 @@
     var now = "0"; //设置为当前服务器的状态值
     var randoms = [0];
     var last_id = 0;
-
+//vip登录时出现车辆
     var vip_login = [];
+    var flag;
     var ajax_vip = function () {
         $.ajax({
-            type:'POST',
-            url:"",
-            success:function (result) {
+            type:'GET',
+            url:"{php echo $this->createMobileUrl('dpm_vip_login')}",
+            success:function (re) {
+                flag = rich.list.length?0:1;
+                var result = JSON.parse(re);
                 if(result.isResultTrue){
-                    vip_login.push(result.resultMsg);
-                    while(vip_login.length){
-                        showcar(vip_login['nickname'],vip_login['avatar'],vip_login['level']);
+                    /*vip_login = vip_login.concat(result.resultMsg);
+                    showcar(vip_login[0]['nickname'],vip_login[0]['avatar'],vip_login[0]['level']);*/
+                    var add_msg = result.resultMsg;
+                    for(var i=0;i < add_msg.length;i++){
+                        rich.add({
+                            type: 'vip',
+                            txt: add_msg[i].level,
+                            src: add_msg[i].avatar,
+                            userName: add_msg[i].nickname,
+                            time:4
+                        })
                     }
+                    if(flag){
+                        rich.init();
+                    }
+                    setTimeout(ajax_vip,3000);
+                }else{
+                    setTimeout(ajax_vip,3000);
                 }
             }
         })
     }
+    setTimeout(ajax_vip,1000);
+
+    function showcar(name,avatar,level) {
+        $('.vip_welcome img').attr('src',avatar);
+        $('#vip_level').html(level);
+        $('#vip_nick_name').html(name);
+        $('.vip_welcome').show();
+
+        $('#car').animate({
+            right:'100%'
+        },5000,function(){
+            $('.vip_welcome').hide();
+            $('#car').css('right','-320px');
+            vip_login.shift();
+            if(vip_login.length){
+                showcar(vip_login[0]['nickname'],vip_login[0]['avatar'],vip_login[0]['level']);
+            }else{
+                setTimeout(ajax_vip,10);
+            }
+        })
+    }
+
     var ajax_getData = function(callback, fnc) {
         $.ajax({
             type: 'POST',
@@ -910,6 +955,8 @@
                     newtime = time;
                     //霸屏
                     if (pascreen != null && pascreen != "") {
+                        /*console.log('uio')
+                        console.log(pascreen);*/
                         for (i = 0; i < pascreen.length; i++) {
                             if (pascreen[i].is_bp == 1) {
                                 rich.add({
@@ -1305,6 +1352,33 @@
                 $('.richMain').html(html);
             },
 
+            create_vip_login: function(dt) {
+                var html = '\
+                        <div class="welcome">\
+                <div id="car">\
+                        <img src="../addons/haoman_dpm/imgs/car.gif" alt="跑车图片" width="320" height="120">\
+                        <p class="vip_welcome">欢迎尊敬的VIP <span id="vip_level">5</span>：<img src="" alt=""><span id="vip_nick_name" style="font-size: 24px;">用户昵称</span> 光临</p>\
+                </div>\
+                </div>\
+                ';
+//                var auto = dt.time > 10 ? 1 : 2;
+                $('.richMain').html(html);
+                $('.richCover').css('opcity',.8);
+//                this.fontAnimate(10);
+console.log($('#vip_level'));console.log(dt.txt);
+                $('.vip_welcome img').attr('src',dt.src);
+                $('#vip_level').html(dt.txt);
+                $('#vip_nick_name').html(dt.userName);
+                var wd = $(document).width() - 400;
+//                debugger;
+                $('#car').animate({
+                    right:wd+'px'
+                },6000,'linear',function(){
+                    $('#car').css('right','-380px');
+//                    $('.richCover').css('opcity',1);
+                })
+            },
+
             showDs: function(dt, isCake) {
                 isCake = isCake == null ? false : isCake;
                 dt.giftId = isCake ? 'cake' : dt.giftId;
@@ -1387,6 +1461,8 @@
                 $('.richMain').html('');
             },
             _show: function(dt) {
+                console.log('_show')
+                console.log(dt);
                 if (dt.img != null && $.trim(dt.img).length > 0&&dt.type!=4) {
                     var img = new Image();
                     var able = false;
@@ -1437,9 +1513,13 @@
                     this.showDs(dt);
                 } else {
                     $('.richCover').html('<canvas style="opacity:0.3"></canvas>');
-                    if (dt.img != null && $.trim(dt.img).length > 0&&dt.type!=4) {
+                    if(dt.type=='vip'){
+                        console.log('show');
+                        console.log(dt);
+                        this.create_vip_login(dt);
+                    }else if (dt.img != null && $.trim(dt.img).length > 0&&dt.type!=4) {
                         this.create2(dt);
-                    } else
+                    }else
                         this.create1(dt);
                     showTime = dt.time;
                 }
@@ -1451,7 +1531,10 @@
                 }
 
                 this.countTime(showTime, dt);
-                if (dt.type != 2) {
+
+                if(dt.type=='vip'){
+//                    $('.richCover').css('opcity',.4);
+                }else if (dt.type != 2) {
                     setTimeout(function() {
                         rich.bgAnimate();
                     }, 1000);
@@ -1516,9 +1599,12 @@
                 this.con = setTimeout(function() {
 
                     if (rich.list.length > 0) {
-
+                        console.log(1)
+console.log(rich.list);
                         var dt = rich.list[0];
                         rich.list.shift();
+                        console.log(2)
+                        console.log(rich.list)
                         rich._show(dt);
                     } else{
 
@@ -1584,19 +1670,8 @@
         <div class="all">
             <div class="onWallHead" style="position: relative;height: 10%;">
                 <div>{$bpreply['bp_title']}</div>
-                <div class="welcome" style="opacity: 1;position: fixed;top: 40px;z-index: 10;">
-                    <img class='car' style="position: absolute;right: 0;" src="../addons/haoman_dpm/imgs/car.gif" alt="跑车图片" width="320" height="120">
-                    <p class="vip_welcome">欢迎尊敬的VIP：XXX 光临</p>
-                </div>
-                <script>
-                	(function(){
-                		$('.car').animate({
-                			right:'100%'
-                		},5000,function(){
-                			$('.vip_welcome').fadeOut();
-                		})
-                	})()
-                </script>
+
+
             </div>
             <div class="onWallMain">
                 <div class="main">

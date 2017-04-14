@@ -120,9 +120,13 @@ if ($fans == false) {
 } else {
 	//增加浏览次数
 	pdo_update('haoman_dpm_reply', array('viewnum' => $reply['viewnum'] + 1), array('id' => $reply['id']));
+	//距上次登录时间大于4小时才更新登录状态，以便大屏出现VIP登场效果
+	if(time()-$fans['last_time']>14400){
+		pdo_update('haoman_dpm_fans',array('last_time'=>time(),'login_status'=>0),array('from_user'=>$from_user));
+	}
 	//VIP进场状态统计
-	$money = floatval($fans['money']);
-//	var_dump($money);exit;
+	/*$money = floatval($fans['money']);
+	var_dump($money);exit;
 	if($fans['money']){
 		$level = pdo_fetch("select * from " . tablename('haoman_dpm_vip_login') . " where money < ".$money." order by id ");
 		var_dump($level);exit;
@@ -133,7 +137,7 @@ if ($fans == false) {
 			'level'=>$level
 		);
 		pdo_update('haoman_dpm_vip_login',$vip_up);
-	}
+	}*/
 
 
 }

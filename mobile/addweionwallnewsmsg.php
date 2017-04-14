@@ -27,7 +27,7 @@ foreach ($list as &$v) {
 	if ($v['wordimg']) {
 		$v['wordimg'] = tomedia($v['wordimg']);
 	}
-//	$v['avatar'] = "../attachment/".$v['avatar'];本地测试
+	//$v['avatar'] = "../attachment/".$v['avatar'];本地测试
 }
 unset($v);
 if ($list) {
