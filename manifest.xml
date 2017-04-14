@@ -22,20 +22,21 @@
 	<bindings>
 		<menu>
 			<entry title="活动管理" do="manage" state="" direct="false" />
+			<entry title="嘉宾管理" do="jiabin" state="" direct="false" />
 			<!--<entry title="现场抽奖奖品" do="code" state="" direct="false" />
 			<entry title="抽奖箱奖品" do="cjxcode" state="" direct="false" />
 			<entry title="大转盘奖品" do="dzp" state="" direct="false" />
 			<entry title="抢红包奖品" do="qhbjp" state="" direct="false" />
 			<entry title="投票管理" do="toupiao" state="" direct="false" />
-			<entry title="嘉宾管理" do="jiabin" state="" direct="false" />
+
 			<entry title="借用设置" do="jieyong" state="" direct="false" />
 			<entry title="红包基本设置" do="hb" state="" direct="false" />
 			<entry title="广告管理" do="admanage" state="" direct="false" />
 			<entry title="帮助说明" do="help" state="" direct="false" />
 			<entry title="摇一摇管理" do="yaoyiyao" state="" direct="false" />-->
 			<entry title="霸屏管理" do="bapin" state="" direct="false" />
-			<!--<entry title="打赏管理" do="dashang" state="" direct="false" />
-			<entry title="对对碰管理" do="ddp" state="" direct="false" />-->
+			<entry title="打赏管理" do="dashang" state="" direct="false" />
+			<!--<entry title="对对碰管理" do="ddp" state="" direct="false" />-->
 			<entry title="管理员管理" do="admin" state="" direct="false" />
 			<entry title="粉丝发红包设置管理" do="fanshb" state="" direct="false" />
 			<!--<entry title="活动开关设置" do="is_start" state="" direct="false" />-->

@@ -3,46 +3,55 @@ global $_GPC, $_W;
 $rid = intval($_GPC['id']);
 $token = $_GPC['token'];
 
-$user_agent = $_SERVER['HTTP_USER_AGENT'];
-if (strpos($user_agent, 'MicroMessenger') === false) {
+$debug=1;
+if($debug){
+    $nickname = '测试账号';
+    $avatar = '/attachment/images/global/avatars/avatar_6.jpg';
+    $from_user = '123456';
+    $rid = '12';
+}else{
+    $user_agent = $_SERVER['HTTP_USER_AGENT'];
+    if (strpos($user_agent, 'MicroMessenger') === false) {
 
-    header("HTTP/1.1 301 Moved Permanently");
-    header("Location: {$this->createMobileUrl('other',array('type'=>1,'id'=>$rid))}");
-    exit();
-}
+        header("HTTP/1.1 301 Moved Permanently");
+        header("Location: {$this->createMobileUrl('other',array('type'=>1,'id'=>$rid))}");
+        exit();
+    }
 
 //网页授权借用开始
 
-load()->model('account');
-$_W['account'] = account_fetch($_W['acid']);
-$cookieid = '__cookie_haoman_dpm_201606186_' . $rid;
-$cookie = json_decode(base64_decode($_COOKIE[$cookieid]),true);
-if ($_W['account']['level'] != 4) {
-    $from_user = $cookie['openid'];
-    $avatar = $cookie['avatar'];
-    $nickname = $cookie['nickname'];
-}else{
-    $from_user = $_W['fans']['from_user'];
-    $avatar = $_W['fans']['tag']['avatar'];
-    $nickname = $_W['fans']['nickname'];
-}
-
-$code = $_GPC['code'];
-$urltype = '';
-if (empty($from_user) || empty($avatar) || empty($nickname)) {
-    if (!is_array($cookie) || !isset($cookie['avatar']) || !isset($cookie['openid']) || !isset($cookie['nickname'])) {
-        $userinfo = $this->get_UserInfo($rid, $code, $urltype);
-        $nickname = $userinfo['nickname'];
-        $avatar = $userinfo['headimgurl'];
-        $from_user = $userinfo['openid'];
-    } else {
+    load()->model('account');
+    $_W['account'] = account_fetch($_W['acid']);
+    $cookieid = '__cookie_haoman_dpm_201606186_' . $rid;
+    $cookie = json_decode(base64_decode($_COOKIE[$cookieid]),true);
+    if ($_W['account']['level'] != 4) {
+        $from_user = $cookie['openid'];
         $avatar = $cookie['avatar'];
         $nickname = $cookie['nickname'];
-        $from_user = $cookie['openid'];
+    }else{
+        $from_user = $_W['fans']['from_user'];
+        $avatar = $_W['fans']['tag']['avatar'];
+        $nickname = $_W['fans']['nickname'];
     }
-}
+
+    $code = $_GPC['code'];
+    $urltype = '';
+    if (empty($from_user) || empty($avatar) || empty($nickname)) {
+        if (!is_array($cookie) || !isset($cookie['avatar']) || !isset($cookie['openid']) || !isset($cookie['nickname'])) {
+            $userinfo = $this->get_UserInfo($rid, $code, $urltype);
+            $nickname = $userinfo['nickname'];
+            $avatar = $userinfo['headimgurl'];
+            $from_user = $userinfo['openid'];
+        } else {
+            $avatar = $cookie['avatar'];
+            $nickname = $cookie['nickname'];
+            $from_user = $cookie['openid'];
+        }
+    }
 
 //网页授权借用结束
+}
+
 
 
 $reply = pdo_fetch( " SELECT * FROM ".tablename('haoman_dpm_bpreply')." WHERE rid='".$rid."' " );
@@ -91,6 +100,8 @@ if($reply['isds']!=1){
 $item_list = pdo_fetch("SELECT `type`,price,ds_time FROM " . tablename('haoman_dpm_guest') . " WHERE rid = :rid and uniacid = :uniacid and turntable =2 and id =:id ORDER BY id desc",array(':rid'=>$rid,':uniacid'=>$_W['uniacid'],':id'=>$item_id));
 
 $guest_list = pdo_fetch("SELECT id FROM " . tablename('haoman_dpm_guest') . " WHERE rid = :rid and uniacid = :uniacid and turntable =1 and id =:id ORDER BY id desc",array(':rid'=>$rid,':uniacid'=>$_W['uniacid'],':id'=>$guest_id));
+
+
 
 if(empty($item_list)||empty($guest_list)){
     $data = array(

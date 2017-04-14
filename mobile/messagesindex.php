@@ -16,7 +16,7 @@ if($debug){
         'realname' => 'lzd',
         'mobile' => '18792839237',
         'address' => '',
-        'rid' => 9,
+        'rid' => 12,
         'sex' => 1,
         'isbaoming' => 1,
         'is_back' => 0,
@@ -120,9 +120,10 @@ if ($fans == false) {
 } else {
 	//增加浏览次数
 	pdo_update('haoman_dpm_reply', array('viewnum' => $reply['viewnum'] + 1), array('id' => $reply['id']));
+	pdo_update('haoman_dpm_fans',array('last_time'=>time()),array('from_user'=>$from_user));
 	//距上次登录时间大于4小时才更新登录状态，以便大屏出现VIP登场效果
 	if(time()-$fans['last_time']>14400){
-		pdo_update('haoman_dpm_fans',array('last_time'=>time(),'login_status'=>0),array('from_user'=>$from_user));
+		pdo_update('haoman_dpm_fans',array('login_status'=>0),array('from_user'=>$from_user));
 	}
 	//VIP进场状态统计
 	/*$money = floatval($fans['money']);

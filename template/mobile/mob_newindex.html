@@ -97,6 +97,7 @@
         var go_RedPackStatus = "{php echo $this->createMobileUrl("RedPackStatus", array('rid' => $rid,'uid'=>$fans['from_user']))}";
         var go_RedPackLuck = "{php echo $this->createMobileUrl("RedPackLuck", array('rid' => $rid,'uid'=>$fans['from_user']))}";
         var go_play_reward_url="{php echo $this->createMobileUrl('play_reward_url',array('rid' => $rid));}";
+        var go_play_reward_seat="{php echo $this->createMobileUrl('play_reward_seat',array('rid' => $rid));}";
         var go_UploadImage="{php echo $this->createMobileUrl('UploadImage',array('rid' => $rid));}";
         var go_deletemsg="{php echo $this->createMobileUrl('deletemsg',array('rid' => $rid,'uid'=>$fans['from_user']));}";
         var go_pullblack="{php echo $this->createMobileUrl('pullblack',array('rid' => $rid,'uid'=>$fans['from_user']));}";
@@ -439,11 +440,26 @@
                     <input name="says" id="ds-field-says" placeholder="打赏语" maxlength="30"/>
                 </div>
                 <p>￥<span class="fl-strong ds-price">0.00</span> ，打赏给<span class="fl-strong ds-guest-name"></span></p>
+            </div>
+
+            <div class="temp_ds_panel" id="ds-step-3">
+                <div class="fl-slide-content">
+                    <div class="ds_data"></div>
                 </div>
+                <div class="fl-slide-pager">
+                    <ul></ul>
+                </div>
+                <p>请先选择打赏<span class="fl-strong">对象</span></p>
+            </div>
         </div>
         <input type="hidden" name="item_id" value="">
         <input type="hidden" name="guest_id" value="">
         <div class="mzh_modal_alert_footer">
+            <div id="ds-step-opera-0">
+                <a class="mzh_btn_confirm" id="ds-staff" style="padding: 0 1rem;">节目/工作人员</a>
+                <a class="mzh_btn_confirm" id="ds-customer" style="padding: 0 1rem;">卡座/顾客</a>
+            </div>
+
             <div id="ds-step-opera-1">
                 <a class="mzh_btn_cancel" id="ds-cancel-btn">取&nbsp;消</a>
                 <a class="mzh_btn_confirm" id="ds-next-btn">选礼物</a>
@@ -452,6 +468,11 @@
             <div id="ds-step-opera-2" class="fl-hide">
                 <a class="mzh_btn_cancel" id="ds-back-btn">返&nbsp;回</a>
                 <a class="mzh_btn_confirm" id="ds-confirm-btn">打&nbsp;赏</a>
+            </div>
+
+            <div id="ds-step-opera-3">
+                <a class="mzh_btn_confirm" id="ds-table" style="padding: 0 1rem;">打赏整桌</a>
+                <a class="mzh_btn_confirm" id="ds-individual" style="padding: 0 1rem;">打赏个人</a>
             </div>
         </div>
     </div>
@@ -671,7 +692,7 @@
         var guest_id =$("input[name=guest_id]").val();
         var megs =$("#ds-field-says").val();
 
-        if (guest_id > 0 && item_id > 0) {
+        if (guest_id && item_id > 0) {
             var submitData = {
                 "guest_id": guest_id,//被打赏人的id
                 "item_id": item_id,//奖品ID
@@ -785,7 +806,6 @@
     {else}
     $(document).ready(function(){
         document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
-
             var click=false;
             $(".ljbp").click(function(){
                         if(click){
@@ -865,8 +885,9 @@
                 },'json');
 
             })
+            console.log('yes');
 
-            $("#ds-confirm-btn").click(function(){
+            $("#ds-confirm-btn").click(function(){console.log('trigger')
                 if(click){
                     return $.tip("请不要频繁点击");;
                 }
@@ -883,7 +904,7 @@
                         "type":3,
                     };
 
-                    $.post('{php echo $this->createMobileUrl('Confirm_dpmds',array('id'=>$rid))}',submitData, function(idata) {
+                    $.post("{php echo $this->createMobileUrl('Confirm_dpmds',array('id'=>$rid))}",submitData, function(idata) {
                         click=false;
                         $("input[name=item_id]").val('');
                         $("input[name=guest_id]").val('');
@@ -1021,6 +1042,7 @@
         $(".bp_img_field video").hide();
         $(".bp_img_field img").show();
         $(".bp_img_field img").attr("src", "../addons/haoman_dpm/imgs/zp.png");
+        $(".ds_panel").hide();
         $(".bp_panel").hide();
         $(".hb_panels").hide();
         $("input[name=money]").val('0');
@@ -1028,7 +1050,6 @@
         $(".hb_panel textarea").val('');
         $("select[name=nums]").val('1');
         $(".content video").show();
-
     })
 </script>
 </body>

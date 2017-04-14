@@ -1751,6 +1751,10 @@ class haoman_dpmModuleSite extends WeModuleSite {
     public function doMobileplay_reward_url(){
         $this->__mobile(__FUNCTION__);
     }
+    //加入打赏对象卡座
+    public function doMobileplay_reward_seat(){
+        $this->__mobile(__FUNCTION__);
+    }
 
 	public function doMobileUploadImage() {
         $this->__mobile(__FUNCTION__);
