@@ -454,6 +454,8 @@
         </div>
         <input type="hidden" name="item_id" value="">
         <input type="hidden" name="guest_id" value="">
+        <input type="hidden" name="fans_id" value="">
+        <input type="hidden" name="tp" value="">
         <div class="mzh_modal_alert_footer">
             <div id="ds-step-opera-0">
                 <a class="mzh_btn_confirm" id="ds-staff" style="padding: 0 1rem;">节目/工作人员</a>
@@ -480,7 +482,7 @@
 
 <div class="fl-template">
     <div class="fl-template-guest">
-        <div class="fl-ds-guest" data-id="##id##">
+        <div class="fl-ds-guest" data-id="##id##" data-detail='##detail##'>
             <img src="http://" class="fl-ds-guest-img"/>
             <p class="fl-ds-guest-name">##name##</p>
             <small class="fl-ds-guest-role">(##role##)</small>
@@ -690,6 +692,7 @@
     $("#ds-confirm-btn").click(function(){
         var item_id =$("input[name=item_id]").val();
         var guest_id =$("input[name=guest_id]").val();
+        var guest_type =$("input[name=tp]").val();
         var megs =$("#ds-field-says").val();
 
         if (guest_id && item_id > 0) {
@@ -697,6 +700,7 @@
                 "guest_id": guest_id,//被打赏人的id
                 "item_id": item_id,//奖品ID
                 "message": megs,//说的话
+                "guest_type":guest_type,//识别是工作人员，整桌，用户
                 "type":3,
             };
             $.post("{php echo $this->createMobileUrl('Confirm_dpmds',array('token'=>'onBridge','id'=>$rid))}",submitData, function(data) {
@@ -1045,6 +1049,7 @@
         $(".ds_panel").hide();
         $(".bp_panel").hide();
         $(".hb_panels").hide();
+        $(".temp_ds_panel").hide();
         $("input[name=money]").val('0');
         $("select[name=num]").val('2');
         $(".hb_panel textarea").val('');

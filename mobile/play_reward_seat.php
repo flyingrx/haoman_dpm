@@ -11,7 +11,7 @@ $guest_list = pdo_fetchall("SELECT * FROM " . tablename('haoman_dpm_fans') . " W
 $item_list = pdo_fetchall("SELECT * FROM " . tablename('haoman_dpm_guest') . " WHERE rid = :rid and uniacid = :uniacid and turntable =2  ORDER BY id desc", array(':rid' => $rid, ':uniacid' => $uniacid));
 if ($guest_list && $item_list) {
 	foreach ($guest_list as $v){
-		$one['item_id'] = $v['id'];
+		$one['id'] = $v['id'];
 		$one['nickname'] = $v['nickname'];
 		$one['avatar'] = $v['avatar'];
 		$one['role'] = $v['ds_times'];

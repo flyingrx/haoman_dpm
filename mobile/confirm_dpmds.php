@@ -67,6 +67,7 @@ if($admin){
 $guest_id = $_GPC['guest_id'];
 $item_id = $_GPC['item_id'];
 $messages = $_GPC['message'];
+$guest_type = $_GPC['guest_type'];
 $pay_type = $_GPC['type'];
 if(empty($nickname)){
     $nickname = trim($_GPC['nickname']);
@@ -99,7 +100,12 @@ if($reply['isds']!=1){
 
 $item_list = pdo_fetch("SELECT `type`,price,ds_time FROM " . tablename('haoman_dpm_guest') . " WHERE rid = :rid and uniacid = :uniacid and turntable =2 and id =:id ORDER BY id desc",array(':rid'=>$rid,':uniacid'=>$_W['uniacid'],':id'=>$item_id));
 
-$guest_list = pdo_fetch("SELECT id FROM " . tablename('haoman_dpm_guest') . " WHERE rid = :rid and uniacid = :uniacid and turntable =1 and id =:id ORDER BY id desc",array(':rid'=>$rid,':uniacid'=>$_W['uniacid'],':id'=>$guest_id));
+if($guest_type==1){
+    $guest_list = pdo_fetch("SELECT id FROM " . tablename('haoman_dpm_guest') . " WHERE rid = :rid and uniacid = :uniacid and turntable =1 and id =:id ORDER BY id desc",array(':rid'=>$rid,':uniacid'=>$_W['uniacid'],':id'=>$guest_id));
+}else{
+    $guest_list=true;
+}
+
 
 
 
@@ -123,6 +129,7 @@ $result = pdo_insert('haoman_dpm_pay_order', array(
     'nickname' => $nickname,
     'bptime' => $item_list['ds_time'],
     'message' => $guest_id,
+    'guest_type' => $guest_type,
     'wordimg' => $messages,
     'pay_total' => $item_list['price'],
     'pay_ip' => $_W['clientip'],
@@ -146,7 +153,6 @@ if (empty($result)) {
 
 }else{
     $orderid = pdo_insertid();
-
 
 
     if($isAdmin==1){
@@ -202,7 +208,6 @@ if (empty($result)) {
         'msg' => "打赏成功",
         'isAdmin' => 0,
     );
-
     echo json_encode($data);
     exit;
 }

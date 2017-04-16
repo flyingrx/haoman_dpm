@@ -526,6 +526,7 @@ CREATE TABLE IF NOT EXISTS `ims_haoman_dpm_pay_order` (
   `closetime` int(11) unsigned NOT NULL COMMENT '关闭时间',
   `transaction_id` varchar(150) DEFAULT '',
   `pay_status` tinyint(1) DEFAULT '0',
+  `guest_type` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `indx_rid` (`rid`),
   KEY `indx_uniacid` (`uniacid`),
