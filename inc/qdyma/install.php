@@ -276,6 +276,7 @@ CREATE TABLE IF NOT EXISTS `ims_haoman_dpm_fans` (
   `money` decimal(11,2) DEFAULT '0',
   `m2p` int(11) DEFAULT '0',
   `seat` tinyint(4) DEFAULT '0',
+  `ds_times` int(11) DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `indx_rid` (`rid`),
   KEY `indx_from_user` (`from_user`),

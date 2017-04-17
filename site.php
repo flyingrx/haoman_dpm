@@ -1513,6 +1513,18 @@ class haoman_dpmModuleSite extends WeModuleSite {
 
             $guest_list = pdo_fetch("SELECT * FROM " . tablename('haoman_dpm_guest') . " WHERE turntable =1 and id =:id ",array(':id'=>$exits['message']));
 
+            if(($exits['guest_type'])==1 && $guest_list){
+                $guest_name = $guest_list['name'];
+                $rets = pdo_update('haoman_dpm_guest', array('type'=>$guest_list['type']+1), array('id'=>$guest_list['id']));
+            }else{
+                if($exits['guest_type']==2){
+                    $guest_name = '第'.$exits['message'].'桌';
+                }else if($exits['guest_type']==3){
+                    $fans_nk = pdo_fetch("select * from " . tablename('haoman_dpm_fans') . " where id = " . $exits['message']);
+                    $guest_name = $fans_nk?'第'.$fans_nk['seat'].'桌：'.$fans_nk['nickname']:'用户ID：'.$exits['message'];
+                    pdo_update('haoman_dpm_fans', array('ds_times'=>$fans_nk['ds_times']+1), array('id'=>$exits['message']));
+                }
+            }
             if($reply['status']==1){
                 $status =0;
             }else{
@@ -1533,7 +1545,7 @@ class haoman_dpmModuleSite extends WeModuleSite {
                     'avatar' => $avatar,
                     'nickname' => $exits['nickname'],
                     'from_user' =>  $exits['from_user'],
-                    'word' => $guest_list['name'],
+                    'word' => $guest_name,
                     'wordimg' => $item_list['pic'],
                     'rid' => $exits['rid'],
                     'status' => $status,
@@ -1549,7 +1561,7 @@ class haoman_dpmModuleSite extends WeModuleSite {
                     'createtime' => time(),
                 );
                 $temp = pdo_insert('haoman_dpm_messages',$insert);
-               $rets = pdo_update('haoman_dpm_guest', array('type'=>$guest_list['type']+1), array('id'=>$guest_list['id']));
+
 
                 $admin = pdo_fetchall("select id,free_times,uses_times,bpadmin,admin_openid from " . tablename('haoman_dpm_bpadmin') . "  where status=0 and rid=:rid", array(':rid'=>$exits['rid']));
                 $isadmin_msg = pdo_fetch("select isadmin from " . tablename('haoman_dpm_pay_order') . "  where transid = :transid ", array(':transid'=>$transid));
