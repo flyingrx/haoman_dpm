@@ -22,7 +22,7 @@ if ($operation == 'updataad') {
 	$keywords = reply_single($_GPC['rulename']);
 	$updata = array('rid' => $_GPC['rulename'], 'uniacid' => $_W['uniacid'], 'money' => $_GPC['money'], 'level' => intval($_GPC['level']), 'createtime' => time(), 'status' => $_GPC['status']);
 	$temp = pdo_update('haoman_dpm_fans_vip', $updata, array('id' => $id));
-	message('修改VIP消费金额成功', $this->createWebUrl('bapinshow', array('rid' => $rid)), "success");
+	message('修改VIP消费金额成功', $this->createWebUrl('fansvipshow', array('rid' => $rid)), "success");
 } elseif ($operation == 'addad') {
 	if ($_GPC['money'] <= 0) {
 		message('消费金额最小值为0.01元，请留意', '', 'error');
@@ -33,7 +33,7 @@ if ($operation == 'updataad') {
 	$keywords = reply_single($_GPC['rulename']);
 	$updata = array('rid' => $_GPC['rulename'], 'uniacid' => $_W['uniacid'], 'money' => $_GPC['money'], 'level' => intval($_GPC['level']), 'createtime' => time(), 'status' => $_GPC['status']);
 	$temp = pdo_insert('haoman_dpm_fans_vip', $updata);
-	message('添加VIP消费金额成功', $this->createWebUrl('bapinshow', array('rid' => $rid)), "success");
+	message('添加VIP消费金额成功', $this->createWebUrl('fansvipshow', array('rid' => $rid)), "success");
 } elseif ($operation == 'up') {
 	$uid = intval($_GPC['uid']);
 	if (empty($uid)) {
@@ -41,7 +41,7 @@ if ($operation == 'updataad') {
 	}
 	$item = pdo_fetch("select * from " . tablename('haoman_dpm_fans_vip') . "  where id=:uid ", array(':uid' => $uid));
 	$keywords = reply_single($item['rid']);
-	include $this->template('updatabapin');
+	include $this->template('newfansvip');
 } elseif ($operation == 'del') {
 	$uid = intval($_GPC['uid']);
 	if (empty($uid)) {

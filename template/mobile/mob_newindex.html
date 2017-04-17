@@ -436,6 +436,7 @@
                 <div class="fl-slide-pager">
                     <ul></ul>
                 </div>
+                <input type="number" name="num" id="ds-num" value="1" maxlength="30"/>
                 <div class="fl-slide-ds-text">
                     <input name="says" id="ds-field-says" placeholder="打赏语" maxlength="30"/>
                 </div>
@@ -694,6 +695,7 @@
         var guest_id =$("input[name=guest_id]").val();
         var guest_type =$("input[name=tp]").val();
         var megs =$("#ds-field-says").val();
+        var num =$("#ds-num").val();
 
         if (guest_id && item_id > 0) {
             var submitData = {
@@ -702,6 +704,7 @@
                 "message": megs,//说的话
                 "guest_type":guest_type,//识别是工作人员，整桌，用户
                 "type":3,
+                "num":num,
             };
             $.post("{php echo $this->createMobileUrl('Confirm_dpmds',array('token'=>'onBridge','id'=>$rid))}",submitData, function(data) {
 

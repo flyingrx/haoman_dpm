@@ -2,8 +2,8 @@
 global $_GPC, $_W;
 $rid = intval($_GPC['id']);
 $uniacid = $_W['uniacid'];
-$debug=1;
-if($debug){
+//$debug=1;
+if(DEBUG){
 	$nickname = '测试账号';
 	$avatar = '/addons/haoman_dpm/static/wedding_xys/lover/heart1.png';
 	$from_user = '123456';
@@ -113,36 +113,41 @@ if(empty($from_user)){
 
 //检测是否为空
 $fans = pdo_fetch("select * from " . tablename('haoman_dpm_fans') . " where rid = '" . $rid . "' and from_user='" . $from_user . "'");
-if ($fans == false) {
+//为空则插入粉丝
+if($fans==false){
+	$insert = array(
+		'uniacid' => $_W['fans']['uniacid'],
+		'from_user' => $_W['fans']['from_user'],
+		'avatar' => $_W['fans']['avatar'],
+		'nickname' => $_W['fans']['nickname'],
+		'realname' => $_W['fans']['from_realname'],
+		'mobile' => $_W['fans']['mobile'],
+		'address' => $_W['fans']['pay_addr'],
+		'rid' => $rid,
+		'sex' => $_W['fans']['sex'],
+		'isbaoming' => 1,
+		'is_back' => 0,
+		'createtime' => time(),
+	);
+
+	pdo_insert('haoman_dpm_fans',$insert);
+}
+
+/*if ($fans == false) {
 	header("HTTP/1.1 301 Moved Permanently");
 	header("Location: " . $this->createMobileUrl('information', array('id' => $rid,'from_user'=>$page_from_user)) . "");
 	exit();
 } else {
-	//增加浏览次数
+
+
+}*/
+//增加浏览次数
 	pdo_update('haoman_dpm_reply', array('viewnum' => $reply['viewnum'] + 1), array('id' => $reply['id']));
 	pdo_update('haoman_dpm_fans',array('last_time'=>time()),array('from_user'=>$from_user));
 	//距上次登录时间大于4小时才更新登录状态，以便大屏出现VIP登场效果
 	if(time()-$fans['last_time']>14400){
 		pdo_update('haoman_dpm_fans',array('login_status'=>0),array('from_user'=>$from_user));
 	}
-	//VIP进场状态统计
-	/*$money = floatval($fans['money']);
-	var_dump($money);exit;
-	if($fans['money']){
-		$level = pdo_fetch("select * from " . tablename('haoman_dpm_vip_login') . " where money < ".$money." order by id ");
-		var_dump($level);exit;
-		$vip_up = array(
-			'uniacid'=>$fans['uniacid'],
-			'from_user'=>$fans['from_user'],
-			'nickname'=>$fans['nickname'],
-			'level'=>$level
-		);
-		pdo_update('haoman_dpm_vip_login',$vip_up);
-	}*/
-
-
-}
-
 
 $admin = pdo_fetch("select id,createtime,uses_times from " . tablename('haoman_dpm_bpadmin') . "  where admin_openid=:admin_openid and status=0 and rid=:rid", array(':admin_openid' => $from_user,':rid'=>$rid));
 

@@ -3,6 +3,7 @@ defined('IN_IA') or exit('Access Denied');
 define('ROOT_PATH', str_replace('site.php', '', str_replace('\\', '/', __FILE__)));
 require_once "phpqrcode.php";/*引入PHP QR库文件*/
 require_once "jssdk.php";
+require_once "debug.php";
 require_once ROOT_PATH."custom/custom.inc.php"; //引入定制判断文件
 class haoman_dpmModuleSite extends WeModuleSite {
 
@@ -391,6 +392,12 @@ class haoman_dpmModuleSite extends WeModuleSite {
     public function doWebbapinshow(){
         $this->__web(__FUNCTION__);
     }
+    public function doWebfansvipshow(){
+        $this->__web(__FUNCTION__);
+    }
+    public function doWebshowcommission(){
+        $this->__web(__FUNCTION__);
+    }
 
 
     //添加和编辑霸屏
@@ -399,6 +406,10 @@ class haoman_dpmModuleSite extends WeModuleSite {
     }
     //添加VIP规则
     public function doWebNewfansvip() {
+        $this->__web(__FUNCTION__);
+    }
+    //添加分佣规则
+    public function doWebNewcommission() {
         $this->__web(__FUNCTION__);
     }
 
@@ -975,6 +986,11 @@ class haoman_dpmModuleSite extends WeModuleSite {
 	public function doWebFanslist() {
 		$this->__web(__FUNCTION__);
 	}
+
+    //分佣管理
+    public function doWebCommission() {
+        $this->__web(__FUNCTION__);
+    }
 
     //2.04新增修改性别功能
 
@@ -1556,6 +1572,7 @@ class haoman_dpmModuleSite extends WeModuleSite {
                     'type' =>2,
                     'gift_id' =>$exits['pay_addr'],
                     'gift' =>1,
+                    'gift_num' =>$exits['num'],
                     'bptime' =>1,
                     'says' =>$exits['wordimg'],
                     'createtime' => time(),

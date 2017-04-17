@@ -14,7 +14,7 @@ if ($guest_list && $item_list) {
 		$one['id'] = $v['id'];
 		$one['nickname'] = $v['nickname'];
 		$one['avatar'] = $v['avatar'];
-		$one['role'] = $v['ds_times'];
+		$one['ds_times'] = $v['ds_times'];
 		if($v['ds_times']){
 			$msg[$v['seat']]['ds_times'] += $v['ds_times'];
 		}

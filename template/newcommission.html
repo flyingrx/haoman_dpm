@@ -2,7 +2,7 @@
 <div class="main">
 	<ul class="nav nav-tabs">
 		{if $turntable == 1}
-	    <li><a  href="{php echo $this->createWebUrl('fansvip');}">粉丝VIP管理</a></li>
+	    <li><a  href="{php echo $this->createWebUrl('commission');}">分佣规则管理</a></li>
     	{/if}
 	    <li class="active"><a  href="#">添加规则</a></li>
 	</ul>
@@ -13,21 +13,21 @@
 			<input type="hidden" value="{$item['id']}" name="listid">
 			<div class="form-group">
 
-				<label for="level" class="control-label">VIP级别:</label>
+				<label for="percentage" class="control-label">分佣比例:</label>
 				<div class="input-group">
-					<input type="number" class="form-control" name="level" value="{$item['level']}">
-					<span class="input-group-addon" >级</span>
+					<input type="number" class="form-control" name="percentage" value="{$item['percentage']}">
+					<span class="input-group-addon" >百分之</span>
 				</div>
 			</div>
 
 			<div class="form-group">
-				<label for="money" class="control-label">累积消费金额:</label>
-				<div class="input-group">
-				<input type="text" class="form-control" name="money" value="{$item['money']}">
-					<span class="input-group-addon" >元</span>
-				</div>
+				<label for="role" class="control-label">角色:</label>
+				<input type="text" class="form-control" name="role" value="{$item['role']}">
+				<!--<div class="input-group">
+					<span class="input-group-addon" > </span>
+				</div>-->
 
-				<div class="help-block">VIP等级对应的金额，最小0.01元</div>
+				<div class="help-block">分佣比例对应的输入框，请填最小为0的整数</div>
 			</div>
 			<div class="form-group">
 				<label class="control-label" style="margin-right: 15px;">状态</label>

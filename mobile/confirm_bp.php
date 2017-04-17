@@ -2,8 +2,8 @@
 global $_GPC, $_W;
 $rid = intval($_GPC['id']);
 $token = $_GPC['token'];
-$debug=1;
-if($debug){
+//$debug=1;
+if(DEBUG){
     $nickname = '测试账号';
     $avatar = '/attachment/images/global/avatars/avatar_6.jpg';
     $from_user = '123456';

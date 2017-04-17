@@ -42,6 +42,7 @@
 			<!--<entry title="活动开关设置" do="is_start" state="" direct="false" />-->
 			<entry title="支付订单管理" do="pay_orders" state="" direct="false" />
 			<entry title="粉丝VIP管理" do="fansvip" state="" direct="false" />
+			<entry title="分佣管理" do="fansvip" state="" direct="false" />
 		</menu>
 	</bindings>
 	<permissions>

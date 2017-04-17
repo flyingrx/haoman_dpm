@@ -3,8 +3,7 @@ global $_GPC, $_W;
 $rid = intval($_GPC['id']);
 $token = $_GPC['token'];
 
-$debug=1;
-if($debug){
+if(DEBUG){
     $nickname = '测试账号';
     $avatar = '/attachment/images/global/avatars/avatar_6.jpg';
     $from_user = '123456';
@@ -69,6 +68,7 @@ $item_id = $_GPC['item_id'];
 $messages = $_GPC['message'];
 $guest_type = $_GPC['guest_type'];
 $pay_type = $_GPC['type'];
+$num = $_GPC['num']?$_GPC['num']:1;
 if(empty($nickname)){
     $nickname = trim($_GPC['nickname']);
 }
@@ -138,6 +138,7 @@ $result = pdo_insert('haoman_dpm_pay_order', array(
     'pay_addr' => $item_id,
     'isadmin' => 0,
     'pay_type' => 3,
+    'num' => $num,
     'createtime' => time(),
 ));
 
