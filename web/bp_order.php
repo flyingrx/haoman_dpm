@@ -1,5 +1,6 @@
 <?php
-
+/*ini_set("display_errors", "On");
+error_reporting(E_ALL | E_STRICT);*/
 
 global $_GPC, $_W;
 $uniacid = $_W['uniacid'];
@@ -46,10 +47,18 @@ $num1 = '';
 $num2 = '';
 foreach ($lists as $v) {
 	if ($v['pay_type'] == $pay_type && $v['status'] == 2) {
-		$num1 += $v['pay_total'];
+		$num1 += $v['pay_total']*$v['num'];
 		if ($v['isadmin'] != 1) {
-			$num2 += $v['pay_total'];
+			$num2 += $v['pay_total']*$v['num'];
 		}
 	}
+}
+if($_GPC['commission']){
+	$where .= ' and isadmin<>:isadmin and status=:status';
+	$params[':isadmin']=1;
+	$params[':status']=2;
+	
+	include $this->template('bpcommission');
+	exit;
 }
 include $this->template('bporderlist');

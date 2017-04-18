@@ -5,9 +5,8 @@
 		<li{if $pay_type==2 } class="active"{/if}><a href="{php echo $this->createWebUrl('bp_order',array('rid'=>$rid,'pay_type'=>2,'delete'=>$delete));}">霸屏支付订单管理</a></li>
 		<li{if $pay_type==3} class="active"{/if}><a href="{php echo $this->createWebUrl('bp_order',array('rid'=>$rid,'pay_type'=>3,'delete'=>$delete));}">打赏支付订单管理</a></li>
 		<li{if $pay_type==4} class="active"{/if}><a href="{php echo $this->createWebUrl('bp_order',array('rid'=>$rid,'pay_type'=>4,'delete'=>$delete));}">红包支付订单管理</a></li>
-		<li><a href="{php echo $this->createWebUrl('bp_order',array('rid'=>$rid,'pay_type'=>3,'delete'=>$delete,'commission'=>true));}">打赏分佣</a></li>
+		<li><a href="{php echo $this->createWebUrl('bp_order',array('rid'=>$rid,'pay_type'=>3,'delete'=>$delete));}">打赏支付订单管理</a></li>
 
-        <!-- <li{if $_GPC['do'] == 'post'} class="active"{/if}><a class="btn-lg" href="{php echo $this->createWebUrl('newad');}">添加广告</a></li> -->
 	</ul>
 	<div class="panel panel-info">
 		<div class="panel-heading">霸屏筛选</div>
@@ -26,18 +25,19 @@
 				<!--</div>-->
 				<!--</div>-->
 				<div class="form-group">
-					<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">微信昵称</label>
+					<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">被打赏人</label>
 					<div class="col-xs-12 col-sm-8 col-lg-9">
-						<input class="form-control" name="nickname" id="" type="text" value="{$_GPC['nickname']}" placeholder="输入霸屏者名称查询">
+						<input class="form-control" name="nickname" id="" type="text" value="{$_GPC['nickname']}" placeholder="输入名称查询">
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">霸屏时间</label>
+					<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">订单时间</label>
 					<div class="col-sm-7 col-lg-8 col-xs-12">
 						{php echo tpl_form_field_daterange('time', array('start'=>date('Y-m-d H:i', $starttime),'end'=>date('Y-m-d  H:i', $endtime)),true);}
 					</div>
+					<button class="btn btn-default"><i class="fa fa-search"></i> 搜索</button>
 				</div>
-				<div class="form-group">
+				<!--<div class="form-group">
 					<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">支付状态</label>
 					<div class="col-xs-12 col-sm-8 col-lg-9">
 						<select name="status" class="form-control" style="float:left">
@@ -47,27 +47,20 @@
 						</select>
 					</div>
 					<div class=" col-xs-12 col-sm-2 col-lg-2">
-						<button class="btn btn-default"><i class="fa fa-search"></i> 搜索</button>
 					</div>
-				</div>
+				</div>-->
 			</form>
 		</div>
 	</div>
 	<button class="btn btn-success" onclick="location.href='{php echo $this->createWebUrl('bp_download',array('rid'=>$_GPC['rid']))}'" type="button"><i class="fa fa-search"></i> 导出数据</button>
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			{if $pay_type!=4}
-			<div class="alert" style="margin-bottom:0;">本次活动霸屏总额(支付成功包括管理员)：{$num1}元　　
-			<div class="alert" style="margin-bottom:0;">本次活动霸屏总额(支付成功，不包括管理员支付)：{$num2}元
-				{else}
-				<div class="alert" style="margin-bottom:0;">本次活动红包总额(支付成功包括管理员)：{$num1}元　　
-					<div class="alert" style="margin-bottom:0;">本次活动红包总额(支付成功，不包括管理员支付)：{$num2}元
-				{/if}　　
-					{if $delete !=1}
+
+			<div class="alert" style="margin-bottom:0;">本次活动打赏总额(支付成功包括管理员)：{$num1}元　　
+			<div class="alert" style="margin-bottom:0;">本次活动打赏总额(支付成功，不包括管理员支付)：{$num2}元
+				{if $delete !=1}
 				<button id="clearnobd" class="btn btn-danger" type="button" style="float: right;margin-top: 0px;margin-left: 15px;">一键清除全部订单
-					{/if}
-			</div>
-		</div>
+				{/if}
 		<div class="panel-body table-responsive">
 		<table class="table table-hover" >
 			<thead class="navbar-inner">
@@ -75,25 +68,25 @@
 					<th class='with-checkbox' style="width:30px;">
 						<input type="checkbox" class="check_all" />
 					</th>
-					<th style="width:100px;">序号</th>
-					<th style="width:80px;">微信昵称</th>
-					<th style="width:120px;">姓名</th>
+					<th style="width:80px;">序号</th>
+					<th style="width:120px;">工作人员/节目</th>
 					<th style="width:220px;">订单号</th>
 					<th style="width:100px;">金额</th>
-					{if $pay_type!=4}
-					<th style="width:100px;">霸屏时间(秒)</th>
-					{else}
-					<th style="width:100px;">实际支付金额</th>
-					<th style="width:100px;">手续费(%)</th>
-					{/if}
-					<th style="width:80px;">状态</th>
+					<th style="width:220px;">打赏人微信昵称</th>
+					<!--<th style="width:120px;">姓名</th>-->
+
+					<!--<th style="width:100px;">霸屏时间(秒)</th>-->
+					<th style="width:100px;">实际到手金额</th>
+					<th style="width:100px;">酒吧平台费用</th>
+					<!--<th style="width:80px;">状态</th>-->
 					<th style="width:80px;">支付方式</th>
 					<th style="width:150px;">创建时间</th>
-					<th style="width:80px;">是否是管理员免支付</th>
-					<th style="width:80px;">订单状态</th>
+					<!--<th style="width:80px;">是否是管理员免支付</th>-->
+					<!--<th style="width:80px;">订单状态</th>-->
 					{if $delete !=1}
 					<th style="width:120px;">操作</th>
 					{/if}
+
 				</tr>
 			</thead>
 			<tbody>
@@ -101,25 +94,16 @@
 				<tr>
 					<td class="with-checkbox"><input type="checkbox" name="check" value="{$row['id']}"></td>
 					<td>{$row['id']}</td>
-					<td>{$row['nickname']}</td>
-					{if $pay_type!=4}
-					<td style="white-space: normal;">{$row['from_realname']}</td>
-					{else}
-					<td style="white-space: normal;">{$row['nickname']}</td>
-					{/if}
+					<td>{$row['guest']}</td>
 					<td>{$row['transid']}</td>
 					<td>{php echo sprintf("%.2f",$row['pay_total']*$row['num'])}</td>
-					{if $pay_type!=4}
+					<td style="white-space: normal;">{$row['nickname']}</td>
 					<td>{php echo $row['bptime']}</td>
-					{else}
 					<td>{php echo $row['pay_addr']}</td>
 					<td>{php echo $row['from_realname']}</td>
-					{/if}
-					<td>{if $row['status']==1}<span style="color: #FF0000">未支付</span>	{else if $row['status']==2}已支付{else}订单关闭{/if}</td>
-					<td>{if $row['orderid']==1}余额{else if $row['orderid']==2}微信支付{else if $row['orderid']==3}支付宝{else if $row['orderid']==0}未付款{else}其他{/if}</td>
+
 					<td>{php echo date('Y/m/d H:i',$row['createtime'])}</td>
-					<td>{if $row['isadmin']==1}<span style="color: #FF0000">是</span>{else}否{/if}</td>
-					<td>{if $row['pay_status']==1}<span style="color: #FF0000">异常</span>{else}正常{/if}</td>
+					<!--<td>{if $row['pay_status']==1}<span style="color: #FF0000">异常</span>{else}正常{/if}</td>-->
 					{if $delete !=1}
 					<td>
                         <a class="btn btn-default" data-toggle="tooltip" data-placement="top" href="#" onclick="drop_confirm('您确定要删除吗?', '{php echo $this->createWebUrl('Deletepay_order',array('id'=>$row['id']))}');" title="删除"><i class="fa fa-times"></i></a>
