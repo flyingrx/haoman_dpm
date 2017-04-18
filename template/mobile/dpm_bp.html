@@ -16,6 +16,7 @@
     <script src="../addons/haoman_dpm/bapinimg/onWallVideo.js"></script>
     <!--五角星 五角星特效引用下面的js-->
     <script src="../addons/haoman_dpm/bapinimg/stars.js"></script>
+    <script type="text/javascript" src="../addons/haoman_dpm/imgs/js/commonFunc.js?v=23323"></script>
     <link rel="stylesheet" href="../addons/haoman_dpm/bapinimg/style.css?v=3213">
     <link href="../addons/haoman_dpm/bapinimg/reward.css?v=32312313" rel="stylesheet" type="text/css">
     <style>
@@ -24,6 +25,36 @@
         .vip_welcome{font-size: 20px;color: red;overflow: hidden;white-space: nowrap;}
         .vip_welcome>img{vertical-align: middle;width: 60px;height: 60px;border-radius: 50%}
         #vip_level{font: inherit;color: inherit;}
+
+        .ani-ds{
+            font-size: 38px;
+            color: gold;
+            animation: scl 2s 1;
+            display: inline-block;
+        }
+        @keyframes scl{
+            0%{
+                -webkit-transform: scale(1,1);
+                -moz-transform: scale(1,1);
+                -ms-transform: scale(1,1);
+                -o-transform: scale(1,1);
+                transform: scale(1,1);
+            }
+            50%{
+                -webkit-transform: scale(3,3);
+                -moz-transform: scale(3,3);
+                -ms-transform: scale(3,3);
+                -o-transform: scale(3,3);
+                transform: scale(3,3);
+            }
+            100%{
+                -webkit-transform: scale(1,1);
+                -moz-transform: scale(1,1);
+                -ms-transform: scale(1,1);
+                -o-transform: scale(1,1);
+                transform: scale(1,1);
+            }
+        }
     </style>
     <script>
     /*音频js*/
@@ -730,7 +761,7 @@
             });
     }
 
-    var addData = function(isDel, data) {
+    var addData = function(isDel, data) {console.log('ddd');console.log(data);
         if (data == null)
             return;
         var newData = [];
@@ -944,9 +975,7 @@
                     var delNum = last_id;
                     last_id = obj[0].id;
                     var time = 1;
-//                    console.log(delNum);
-                //    console.log(obj.length);
-//                    console.log(1234);
+
                     var wineDate = '';
                     var pascreen = '';
                     var weionwallmsgs = obj;
@@ -955,8 +984,8 @@
                     newtime = time;
                     //霸屏
                     if (pascreen != null && pascreen != "") {
-                        /*console.log('uio')
-                        console.log(pascreen);*/
+                        console.log('uio')
+                        console.log(pascreen);
                         for (i = 0; i < pascreen.length; i++) {
                             if (pascreen[i].is_bp == 1) {
                                 rich.add({
@@ -975,6 +1004,7 @@
                                     txt: pascreen[i].word,
                                     src: pascreen[i].avatar,
                                     userName: pascreen[i].nickname,
+                                    gift_num:pascreen[i].gift_num,
                                 })
                             }
                             d.setTime(pascreen[i].createtime);
@@ -1167,6 +1197,7 @@
                                 bpForTa: obj[i].for_nickname,
                                 gift: obj[i].gift,
                                 giftId: obj[i].gift_id,
+                                gift_num: obj[i].gift_num,
                                 say: obj[i].says
 
                             };
@@ -1236,6 +1267,7 @@
                         type: dt.type || 'rich',
                         giftId: dt.giftId == null ? '' : dt.giftId,
                         gift: (dt.gift == null || dt.gift == '') ? 0 : dt.gift,
+                        giftNum:dt.gift_num,
                         tid: dt.tid,
                         img: dt.img || '',
                         txt: dt.txt,
@@ -1395,7 +1427,7 @@ console.log($('#vip_level'));console.log(dt.txt);
                 else
                     html += '<p class="textMain2">打赏给 ' + dt.txt + '</p>';
 
-                html += '<p class="textMain3"><tt>' + giftName + '</tt></p>';
+                html += '<p class="textMain3"><tt>' + giftName + '</tt><div class="ani-ds"> X  <span id="ct_num" style="font: inherit;color:inherit;"></span></div></p>';
                 html += '<p class="textMain22">'+dt.say+'</p>';
                 //文字
                 if (isCake && dt.txt != null && $.trim(dt.txt).length > 0)
@@ -1420,6 +1452,12 @@ console.log($('#vip_level'));console.log(dt.txt);
                 html += '</div>';
                 html += '<div class="richDsRight"><div class="playerImgCover"></div><img class="playerImg" type="ds" onload="rich.setImage(this,true)" src="' + dt.img + '" /></div>';
                 $('.richMain').html(html);
+
+                //数字连续变化
+                var ct_num = document.getElementById('ct_num');
+                if(ct_num){
+                    countUp(ct_num,dt.giftNum,1,1500,0);
+                }
 
                 setTimeout(function() {
                     var h = $('.textMain')[0].offsetHeight;
@@ -1581,6 +1619,7 @@ console.log($('#vip_level'));console.log(dt.txt);
                     type: dt.type || 'rich',
                     giftId: dt.giftId == null ? '' : dt.giftId,
                     gift: (dt.gift == null || dt.gift == '') ? 0 : dt.gift,
+                    giftNum:dt.gift_num,
                     tid: dt.tid,
                     img: dt.img,
                     txt: dt.txt,
@@ -1599,12 +1638,10 @@ console.log($('#vip_level'));console.log(dt.txt);
                 this.con = setTimeout(function() {
 
                     if (rich.list.length > 0) {
-                        console.log(1)
-console.log(rich.list);
                         var dt = rich.list[0];
                         rich.list.shift();
-                        console.log(2)
-                        console.log(rich.list)
+                        console.log('init');
+                        console.log(dt);
                         rich._show(dt);
                     } else{
 
