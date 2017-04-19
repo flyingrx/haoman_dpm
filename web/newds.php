@@ -34,6 +34,7 @@ if($turntable==2){
             'rid' => $_GPC['rulename'],
             'uniacid' => $_W['uniacid'],
             'name' => $_GPC['gift_name'],
+
             'turntable' => $turntable,
             'price' => $_GPC['ds_money'],
             'ds_pic' => $_GPC['ds_pic'],
@@ -121,6 +122,7 @@ if($turntable==2){
             'rid' => $_GPC['rulename'],
             'uniacid' => $_W['uniacid'],
             'name' => $_GPC['gift_name'],
+            'commission' => $_GPC['commission'],
             'turntable' => $turntable,
             'pic' => $_GPC['pic'],
             'says' => $_GPC['ds_says'],
@@ -143,6 +145,7 @@ if($turntable==2){
             'rid' => $_GPC['rulename'],
             'uniacid' => $_W['uniacid'],
             'name' => $_GPC['gift_name'],
+            'commission' => $_GPC['commission'],
             'turntable' => $turntable,
             'pic' => $_GPC['pic'],
             'says' => $_GPC['ds_says'],

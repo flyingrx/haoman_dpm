@@ -13,7 +13,7 @@ $delete = $_GPC['delete'];
 $where = '';
 $starttime = mktime(0, 0, 0, date('m'), 1, date('Y'));
 $endtime = time();
-$params = array(':rid' => $rid, ':uniacid' => $_W['uniacid'], 'pay_type' => $pay_type);
+$params = array(':rid' => $rid, ':uniacid' => $_W['uniacid']);
 if (!empty($_GPC['status'])) {
 	$where .= ' and status=:status';
 	$params[':status'] = $_GPC['status'];
@@ -29,6 +29,58 @@ if (!empty($_GPC['time'])) {
 	$params[':starttime'] = $starttime;
 	$params[':endtime'] = $endtime;
 }
+
+if($_GPC['commission']){
+
+	$cis = pdo_fetchall("select * from " . tablename('haoman_dpm_commission')." order by id desc");
+	$cis_sj = pdo_fetchcolumn("select percentage from " . tablename('haoman_dpm_commission')." where id =3");
+
+//	var_dump($cis_sj);exit;
+	$where .= ' and isadmin<>:isadmin and status=:status';
+	$params[':isadmin']=1;
+	$params[':status']=2;
+
+
+	$guest_id = pdo_fetchcolumn("select id from ".tablename('haoman_dpm_guest')."where name=:name",array(':name'=>$_GPC['name']));
+	if($guest_id){
+		$where.=' and message='.$guest_id;
+	}
+	
+	$total = pdo_fetchcolumn("select count(id) from " . tablename('haoman_dpm_pay_order') . "  where rid = :rid and uniacid=:uniacid  and pay_type=3" . $where, $params);
+	$pindex = max(1, intval($_GPC['page']));
+	$psize = 20;
+	$pager = pagination($total, $pindex, $psize);
+	$start = ($pindex - 1) * $psize;
+	$limit .= " LIMIT {$start},{$psize}";
+	$list = pdo_fetchall("select * from " . tablename('haoman_dpm_pay_order') . " where rid = :rid and uniacid=:uniacid and pay_type=3" . $where . " order by id desc " . $limit, $params);
+//var_dump($list);exit;
+	/*$v['real_money'] = sprintf("%.2f",$v['pay_total']*$v['num']*0.8);
+	$v['bar_fee'] = sprintf("%.2f",$v['money']-$v['real_money']);*/
+	$total_money =0;
+	$staff_money =0;
+	foreach ($list as $v) {
+		$v['money'] = sprintf("%.2f",$v['pay_total']*$v['num']);
+		
+		$one = pdo_fetch('SELECT name,commission FROM ' . tablename('haoman_dpm_guest') . ' WHERE `id` = :id ', array(":id" => $v['message']));
+		$v['guest_name']=$one['name'];
+		$v['commission']=$one['commission'];
+		
+		$total_money+=($v['pay_total']*$v['num']);
+		$staff_money+=($v['pay_total']*$v['num']*$cis_sj*$v['commission']);
+		$all[]=$v;
+	}
+	$staff_money=$staff_money/10000;
+	//第一行的统计
+	unset($v);
+	foreach ($cis as $idx=>$v){
+		$statistics[$idx]['name'] = $v['role'];
+		$statistics[$idx]['money'] = $v['percentage']*$total_money/100;
+	}
+
+	include $this->template('bpcommission');
+	exit;
+}
+
 $total = pdo_fetchcolumn("select count(id) from " . tablename('haoman_dpm_pay_order') . "  where rid = :rid and uniacid=:uniacid  and pay_type=:pay_type" . $where . "", $params);
 $pindex = max(1, intval($_GPC['page']));
 $psize = 20;
@@ -53,12 +105,5 @@ foreach ($lists as $v) {
 		}
 	}
 }
-if($_GPC['commission']){
-	$where .= ' and isadmin<>:isadmin and status=:status';
-	$params[':isadmin']=1;
-	$params[':status']=2;
-	
-	include $this->template('bpcommission');
-	exit;
-}
+
 include $this->template('bporderlist');

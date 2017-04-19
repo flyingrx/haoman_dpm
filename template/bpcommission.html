@@ -1,11 +1,17 @@
 {template 'common/header'}
-
+<style>
+	.statistics em{
+		color: red;
+		font-size: 2rem;
+		font-weight: bold;
+	}
+</style>
 <div class="main">
 	<ul class="nav nav-tabs">
-		<li{if $pay_type==2 } class="active"{/if}><a href="{php echo $this->createWebUrl('bp_order',array('rid'=>$rid,'pay_type'=>2,'delete'=>$delete));}">霸屏支付订单管理</a></li>
-		<li{if $pay_type==3} class="active"{/if}><a href="{php echo $this->createWebUrl('bp_order',array('rid'=>$rid,'pay_type'=>3,'delete'=>$delete));}">打赏支付订单管理</a></li>
-		<li{if $pay_type==4} class="active"{/if}><a href="{php echo $this->createWebUrl('bp_order',array('rid'=>$rid,'pay_type'=>4,'delete'=>$delete));}">红包支付订单管理</a></li>
+		<li><a href="{php echo $this->createWebUrl('bp_order',array('rid'=>$rid,'pay_type'=>2,'delete'=>$delete));}">霸屏支付订单管理</a></li>
 		<li><a href="{php echo $this->createWebUrl('bp_order',array('rid'=>$rid,'pay_type'=>3,'delete'=>$delete));}">打赏支付订单管理</a></li>
+		<li><a href="{php echo $this->createWebUrl('bp_order',array('rid'=>$rid,'pay_type'=>4,'delete'=>$delete));}">红包支付订单管理</a></li>
+		<li class="active"><a href="{php echo $this->createWebUrl('bp_order',array('rid'=>$rid,'pay_type'=>3,'delete'=>$delete,'commission'=>1));}">打赏分佣</a></li>
 
 	</ul>
 	<div class="panel panel-info">
@@ -17,7 +23,7 @@
 				<input type="hidden" name="m" value="haoman_dpm" />
 				<input type="hidden" name="do" value="bp_order" />
 				<input type="hidden" name="rid" value="{$_GPC['rid']}" />
-				<input type="hidden" name="pay_type" value="{$pay_type}" />
+				<input type="hidden" name="commission" value="1" />
 				<!--<div class="form-group">-->
 				<!--<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">关键字</label>-->
 				<!--<div class="col-xs-12 col-sm-8 col-lg-9">-->
@@ -25,9 +31,9 @@
 				<!--</div>-->
 				<!--</div>-->
 				<div class="form-group">
-					<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">被打赏人</label>
+					<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">被打赏人/节目</label>
 					<div class="col-xs-12 col-sm-8 col-lg-9">
-						<input class="form-control" name="nickname" id="" type="text" value="{$_GPC['nickname']}" placeholder="输入名称查询">
+						<input class="form-control" name="name" id="" type="text" value="{$_GPC['name']}" placeholder="输入名称查询">
 					</div>
 				</div>
 				<div class="form-group">
@@ -53,14 +59,21 @@
 		</div>
 	</div>
 	<button class="btn btn-success" onclick="location.href='{php echo $this->createWebUrl('bp_download',array('rid'=>$_GPC['rid']))}'" type="button"><i class="fa fa-search"></i> 导出数据</button>
-	<div class="panel panel-default">
-		<div class="panel-heading">
+<div class="panel panel-default">
+	<div class="panel-heading">
 
-			<div class="alert" style="margin-bottom:0;">本次活动打赏总额(支付成功包括管理员)：{$num1}元　　
-			<div class="alert" style="margin-bottom:0;">本次活动打赏总额(支付成功，不包括管理员支付)：{$num2}元
+			<div class="alert statistics" style="margin-bottom:0;">
+				<span>本次活动打赏总额(支付成功不包括管理员支付)：<em>{$total_money}</em>元。</span>
+				<span>其中工作人员提成：<em>{$staff_money}</em>元。</span>
+				{loop $statistics $row}
+				<span>{$row['name']}提成：<em>{$row['money']}</em>元。</span>
+				{/loop}
+				<div class="help-block">（工作人员提成包含于商家提成）</div>
 				{if $delete !=1}
-				<button id="clearnobd" class="btn btn-danger" type="button" style="float: right;margin-top: 0px;margin-left: 15px;">一键清除全部订单
+				<button id="clearnobd" class="btn btn-danger" type="button" style="float: right;margin-top: 0px;margin-left: 15px;">一键清除全部订单</button>
 				{/if}
+
+			</div>
 		<div class="panel-body table-responsive">
 		<table class="table table-hover" >
 			<thead class="navbar-inner">
@@ -73,13 +86,20 @@
 					<th style="width:220px;">订单号</th>
 					<th style="width:100px;">金额</th>
 					<th style="width:220px;">打赏人微信昵称</th>
+					<th style="width:120px;">工作人员提成</th>
 					<!--<th style="width:120px;">姓名</th>-->
 
 					<!--<th style="width:100px;">霸屏时间(秒)</th>-->
-					<th style="width:100px;">实际到手金额</th>
-					<th style="width:100px;">酒吧平台费用</th>
+					{loop $cis $row}
+					<th style="width:120px;">{$row['role']}提成</th>
+					{/loop}
+					<!--
+					<th>商家金额</th>
+					<th>中间人金额</th>
+					<th>平台金额</th>-->
+
 					<!--<th style="width:80px;">状态</th>-->
-					<th style="width:80px;">支付方式</th>
+					<!--<th style="width:80px;">支付方式</th>-->
 					<th style="width:150px;">创建时间</th>
 					<!--<th style="width:80px;">是否是管理员免支付</th>-->
 					<!--<th style="width:80px;">订单状态</th>-->
@@ -90,17 +110,23 @@
 				</tr>
 			</thead>
 			<tbody>
-                    {loop $list $row}
+                    {loop $all $row}
 				<tr>
 					<td class="with-checkbox"><input type="checkbox" name="check" value="{$row['id']}"></td>
 					<td>{$row['id']}</td>
-					<td>{$row['guest']}</td>
+					<td>{$row['guest_name']}</td>
 					<td>{$row['transid']}</td>
-					<td>{php echo sprintf("%.2f",$row['pay_total']*$row['num'])}</td>
+					<td>{$row['money']}</td>
 					<td style="white-space: normal;">{$row['nickname']}</td>
-					<td>{php echo $row['bptime']}</td>
-					<td>{php echo $row['pay_addr']}</td>
-					<td>{php echo $row['from_realname']}</td>
+					<td>{php echo sprintf("%.2f",$row['money']*$cis_sj*$row['commission']/10000)}</td>
+						{loop $cis $rrow}
+						<td>{php echo sprintf("%.2f",$row['money']*$rrow['percentage']/100)}</td>
+						{/loop}
+					<!--<td>{php echo $row['real_money']}</td>
+					<td>{php echo $row['bar_fee']}</td>-->
+
+
+					<!--<td>{php echo $row['from_realname']}</td>-->
 
 					<td>{php echo date('Y/m/d H:i',$row['createtime'])}</td>
 					<!--<td>{if $row['pay_status']==1}<span style="color: #FF0000">异常</span>{else}正常{/if}</td>-->
@@ -163,7 +189,7 @@ $(function(){
 	$("input[name=deleteall_fans]").click(function(){
 		var check = $("input:checked");
 
-		if(check.length<2){
+		if(check.length<1){
 			alert('请选择要删除的记录!');
 			return false;
 		}
@@ -172,7 +198,7 @@ $(function(){
 			check.each(function(i){
 				id[i] = $(this).val();
 			});
-			$.post('{php echo $this->createWebUrl('Del_bporders',array('rid'=>$rid))}', {idArr:id},function(data){
+			$.post("{php echo $this->createWebUrl('Del_bporders',array('rid'=>$rid))}", {idArr:id},function(data){
 				if (data.flag ==1)
 				{
 					alert(data.msg);
@@ -180,8 +206,6 @@ $(function(){
 				} else {
 					alert(data.msg);
 				}
-
-
 			},'json');
 		}
 

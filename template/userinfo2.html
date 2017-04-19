@@ -82,7 +82,7 @@
 					<td>{php echo date('m-d H:i', $row['createtime'])}</td>
 					<td>{$row['nickname']}</td>
 					<td>{$row['transid']}</td>
-					<td>{$row['pay_total']}</td>
+					<td>{php echo sprintf('%.2f',$row['pay_total']*$row['num'])}</td>
 					<td style="width:220px;padding-left: 0;padding-right: 0">{$row['bptime']}</td>
 					<td>{if $row['status']==2}已支付{else}未支付{/if}</td>
 					<td>{if $row['isadmin']==1}是{else}否{/if}</td>

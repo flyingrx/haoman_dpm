@@ -20,6 +20,11 @@ if ($operation == 'updataad') {
 		message('请填入角色名称', '', 'error');
 	}
 	$keywords = reply_single($_GPC['rulename']);
+
+	$other_p = pdo_fetchcolumn("select SUM(percentage) from".tablename('haoman_dpm_commission')."where id <>".$id);
+	if($_GPC['percentage']+$other_p>100){
+		message('请保证所有角色分佣比例相加不大于100', '', 'error');
+	}
 	$updata = array('rid' => $_GPC['rulename'], 'uniacid' => $_W['uniacid'], 'percentage' => intval($_GPC['percentage']), 'role' => $_GPC['role'], 'createtime' => time(), 'status' => $_GPC['status']);
 	$temp = pdo_update('haoman_dpm_commission', $updata, array('id' => $id));
 	message('修改分佣规则成功', $this->createWebUrl('showcommission', array('rid' => $rid)), "success");
@@ -31,6 +36,10 @@ if ($operation == 'updataad') {
 		message('请填入角色名称', '', 'error');
 	}
 	$keywords = reply_single($_GPC['rulename']);
+	$other_p = pdo_fetchcolumn("select SUM(percentage) from".tablename('haoman_dpm_commission'));
+	if($_GPC['percentage']+$other_p>100){
+		message('请保证所有角色分佣比例相加不大于100', '', 'error');
+	}
 	$updata = array('rid' => $_GPC['rulename'], 'uniacid' => $_W['uniacid'], 'percentage' =>  intval($_GPC['percentage']), 'role' =>$_GPC['role'], 'createtime' => time(), 'status' => $_GPC['status']);
 	$temp = pdo_insert('haoman_dpm_commission', $updata);
 	message('添加分佣规则成功', $this->createWebUrl('showcommission', array('rid' => $rid)), "success");

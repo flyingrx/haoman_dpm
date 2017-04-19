@@ -20,8 +20,8 @@ if ($_W['isajax']) {
 		$params[':endtime'] = $endtime;
 	}
 	$dsdata = pdo_fetchall("select * from " . tablename('haoman_dpm_pay_order') . " where " . $condition . " order by id LIMIT 50 ", $params);
-	$dsmoney = pdo_fetch("select SUM(pay_total) as most_money FROM " . tablename('haoman_dpm_pay_order') . " WHERE uniacid=:uniacid and message = :message and pay_type=:pay_type", array(':uniacid' => $_W['uniacid'], ':message' => $guest['id'], ':pay_type' => 3));
-	$dsmoney = $dsmoney['most_money'];
+	$dsmoney = pdo_fetch("select SUM(pay_total*num) as most_money FROM " . tablename('haoman_dpm_pay_order') . " WHERE uniacid=:uniacid and message = :message and pay_type=:pay_type", array(':uniacid' => $_W['uniacid'], ':message' => $guest['id'], ':pay_type' => 3));
+	$dsmoney = $dsmoney['most_money']?$dsmoney['most_money']:0;
 	foreach ($dsdata as &$k) {
 		$k['bptime'] = pdo_fetchcolumn('SELECT `ds_time` FROM ' . tablename('haoman_dpm_guest') . ' WHERE `id` = :id ', array(":id" => $k['pay_addr']));
 	}

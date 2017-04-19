@@ -82,6 +82,14 @@
 					<div class="help-block">简单的项目介绍。</div>
 
 				</div>
+				<div class="form-group">
+					<label class="control-label">项目分佣（占商家收入的百分比）</label>
+
+					<div class="input-group">
+						<input type="number" class="form-control" name="commission" placeholder="请填入大于0的整数" value="{$item['commission']}">
+						<div class="input-group-addon">%</div>
+					</div>
+				</div>
 				{/if}
 				<div class="form-group">
 					<label class="control-label" style="margin-right: 15px;">状态</label>
@@ -104,7 +112,7 @@
 					</div>
 				</div>
 				<div class="form-group col-sm-12">
-					<input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
+					<input id="updatads_submit" type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
 					<input type="hidden" name="op" value="updataad" />
 				</div>
 		</div>
@@ -126,7 +134,13 @@
 
 
 $(function(){
-
+	$("#updatads_submit").click(function (e) {
+		var vl = $('input[name=commission]').val();
+		if(vl>100 || vl<0){
+			alert("请输入小于100的正整数");
+			e.preventDefault();
+		}
+	})
     $(".check_all").click(function(){
        var checked = $(this).get(0).checked;
 
