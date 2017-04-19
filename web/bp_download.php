@@ -103,16 +103,14 @@ foreach ($list as $value) {
     $html .=  $value['isadmin']. "\t ,";
     $html .=  date('Y-m-d H:i:s', $value['createtime']) . "\n ";
 
-
-
 }
-
+//var_dump($html);exit;
 
 header("Content-type:text/csv");
 
 header("Content-Disposition:attachment;filename=霸屏记录.csv");
 
-$html = mb_convert_encoding($html, 'gb2312', 'UTF-8');
+//$html = mb_convert_encoding($html, 'gb2312', 'UTF-8');
 
 echo $html;
 exit();

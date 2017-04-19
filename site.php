@@ -1028,6 +1028,10 @@ class haoman_dpmModuleSite extends WeModuleSite {
     public function doWebbp_download(){
         $this->__web(__FUNCTION__);
     }
+    //导出分佣记录
+    public function doWebbp_download_commission(){
+        $this->__web(__FUNCTION__);
+    }
 
     //导出提现记录
 	public function doWebDownload3(){
