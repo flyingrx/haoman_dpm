@@ -298,11 +298,23 @@ CREATE TABLE IF NOT EXISTS `ims_haoman_dpm_guest` (
   `price` decimal(11,2) NOT NULL COMMENT '打赏金额',
   `type` tinyint(1) DEFAULT '0' COMMENT '打赏次数',
   `status` tinyint(1) DEFAULT '0' COMMENT '状态',
+  `commission` tinyint(3) DEFAULT '60' COMMENT '项目分佣',
   PRIMARY KEY (`id`),
   KEY `indx_rid` (`rid`),
   KEY `indx_uniacid` (`uniacid`),
   KEY `indx_turntable` (`turntable`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+CREATE TABLE IF NOT EXISTS `ims_haoman_dpm_commission` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT '0',
+  `rid` int(10) unsigned DEFAULT '0',
+  `percentage` tinyint(4) DEFAULT '0' COMMENT '分佣比例',
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否开启',
+  `role` varchar(20) DEFAULT NULL COMMENT '分佣角色',
+  `createtime` int(11) DEFAULT '0' COMMENT '创建的时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC AUTO_INCREMENT=4 ;
+
 CREATE TABLE IF NOT EXISTS `ims_haoman_dpm_hb` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `uniacid` int(11) unsigned NOT NULL DEFAULT '0',
@@ -838,3 +850,4 @@ CREATE TABLE IF NOT EXISTS `ims_haoman_dpm_yyyuser` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 EOF;
 pdo_run($sql);
+

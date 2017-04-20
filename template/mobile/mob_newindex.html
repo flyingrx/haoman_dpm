@@ -595,6 +595,15 @@
     </div>
 
 <script>
+    $(function(){
+        //提示打赏排队
+        var dl = '{$dl}';
+        if(dl){
+            setTimeout(function(){
+                $.tip('你在队列中第'+dl+'位','','error');
+            },1000)
+        }
+    })
     function haobang(){
         location.href = "{php echo $this->createMobileUrl("haobang", array('rid' => $rid,'uid'=>$fans['from_user'],'type'=>'today'))}";
     }

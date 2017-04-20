@@ -761,7 +761,7 @@
             });
     }
 
-    var addData = function(isDel, data) {console.log('ddd');console.log(data);
+    var addData = function(isDel, data) {
         if (data == null)
             return;
         var newData = [];
@@ -1157,7 +1157,7 @@
             </div>
         </div>
         <script>
-
+         var bp_last_id = 0;
 
         //已显示霸屏
         var ajax_bp = function(tid, errorFn) {
@@ -1175,7 +1175,7 @@
         var ajax_getFail = function(fn1, fn2) {
 
             $.post("{php echo $this->createMobileUrl('noshowpascreens', array('id' => $rid))}", {
-
+                bp_last_id:bp_last_id
             }, function(data) {
 
                 if (data.isResultTrue) {
@@ -1183,7 +1183,9 @@
                     if (data.resultMsg != null && data.resultMsg != "") {
                         var obj = data.resultMsg;
                         var dt = [];
+                        bp_last_id = obj[0].id;
                         for (i = 0; i < obj.length; i++) {
+                            console.log(bp_last_id);
                             var ob = {
                                 type: obj[i].type, //0普通，1霸屏，2打赏，3红包，4视频，5为人霸屏，6表白,7礼物
                                 tid: obj[i].id,
@@ -1499,8 +1501,6 @@ console.log($('#vip_level'));console.log(dt.txt);
                 $('.richMain').html('');
             },
             _show: function(dt) {
-                console.log('_show')
-                console.log(dt);
                 if (dt.img != null && $.trim(dt.img).length > 0&&dt.type!=4) {
                     var img = new Image();
                     var able = false;
@@ -1540,10 +1540,10 @@ console.log($('#vip_level'));console.log(dt.txt);
                 } else
                     this.show(dt);
             },
-            show: function(dt) {
+            show: function(dt) {console.log(dt);
                 setTimeout(function() {
                     ajax_bp(dt.tid, function() {});
-                }, 1000);
+                }, dt.time*1000);
                 var showTime;
                 if (dt.type == 2) {
 

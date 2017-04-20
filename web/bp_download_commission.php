@@ -7,7 +7,7 @@ checklogin();
 
 
 $cis = pdo_fetchall("select * from " . tablename('haoman_dpm_commission')." order by id desc");
-$cis_sj = pdo_fetchcolumn("select percentage from " . tablename('haoman_dpm_commission')." where id =3");
+$cis_sj = pdo_fetchcolumn("select percentage from " . tablename('haoman_dpm_commission')." where id =1");
 
 $params = array(':rid' => $rid, ':uniacid' => $_W['uniacid']);
 $where .= ' and isadmin<>:isadmin and status=:status';

@@ -67,7 +67,6 @@ if(DEBUG){
 
 //网页授权借用结束
 
-
 $page_from_user = base64_encode(authcode($from_user, 'ENCODE'));
 
 
@@ -232,6 +231,21 @@ if(empty($reply['mobpicurl'])){
 	$bg = "../addons/haoman_dpm/mobimg/bg.jpg";
 }else{
 	$bg = tomedia($reply['mobpicurl']);
+}
+//计算自己的打赏或者霸屏距离上墙还有多少秒
+
+$temp_time=time()-3600;
+$me = pdo_fetchall("SELECT * FROM " . tablename('haoman_dpm_messages') . " WHERE rid = :rid and uniacid = :uniacid and from_user = :from_user and status = 1 and is_back !=1 and is_xy !=1 and is_bpshow = 1 and createtime > :createtime",array(':rid'=>$rid,':uniacid'=>$uniacid,':from_user' => $from_user,':createtime'=>$temp_time));
+if($me){
+
+	$me = pdo_fetchall("SELECT * FROM " . tablename('haoman_dpm_messages') . " WHERE rid = :rid and uniacid = :uniacid and status = 1 and is_back !=1 and is_xy !=1 and is_bpshow = 1 and createtime > :createtime",array(':rid'=>$rid,':uniacid'=>$uniacid,':createtime'=>$temp_time));
+	foreach ($me as $index=>$v){
+		if($v['from_user']=$from_user){
+			$dl=$index+1;
+			break;
+		}
+	}
+
 }
 
 $jssdk = new JSSDK();

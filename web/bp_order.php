@@ -33,7 +33,7 @@ if (!empty($_GPC['time'])) {
 if($_GPC['commission']){
 
 	$cis = pdo_fetchall("select * from " . tablename('haoman_dpm_commission')." order by id desc");
-	$cis_sj = pdo_fetchcolumn("select percentage from " . tablename('haoman_dpm_commission')." where id =3");
+	$cis_sj = pdo_fetchcolumn("select percentage from " . tablename('haoman_dpm_commission')." where id =1");
 
 //	var_dump($cis_sj);exit;
 	$where .= ' and isadmin<>:isadmin and status=:status';

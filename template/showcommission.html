@@ -26,7 +26,9 @@
                             <td>{$row['rulename']}</td>
                             <td>
                                 <a class="btn btn-default" data-toggle="tooltip" data-placement="top" href="{php echo $this->createWebUrl('Newcommission',array('rid' => $rid,'op'=>'up','uid'=>$row['id']));}" title="编辑"><i class="fa fa-edit"></i></a>
+                                {if $row['id']!=1}
                                 <a class="btn btn-default" data-toggle="tooltip" data-placement="top" href="#" onclick="drop_confirm('您确定要删除吗?', '{php echo $this->createWebUrl('Newcommission',array('rid' => $rid,'op'=>'del','uid'=>$row['id']));}');" title="删除"><i class="fa fa-times"></i></a>
+                                {/if}
                             </td>
                         </tr>
                         {/loop}

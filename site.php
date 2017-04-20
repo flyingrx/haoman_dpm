@@ -1577,7 +1577,7 @@ class haoman_dpmModuleSite extends WeModuleSite {
                     'gift_id' =>$exits['pay_addr'],
                     'gift' =>1,
                     'gift_num' =>$exits['num'],
-                    'bptime' =>1,
+                    'bptime' =>$exits['bptime'],//原为1。4.20修改。
                     'says' =>$exits['wordimg'],
                     'createtime' => time(),
                 );
