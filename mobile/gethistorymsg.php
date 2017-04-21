@@ -7,6 +7,9 @@ $uid = $_GPC['uid'];
 $from_user = $_W['openid'];
 $minid = $_GPC['minid'];
 $isAdmin = 0;
+if(DEBUG){
+	$from_user = '123456';
+}
 if ($uid == $from_user) {
 	$admin = pdo_fetch("select id from " . tablename('haoman_dpm_bpadmin') . "  where admin_openid=:admin_openid and status=0 and rid=:rid ", array(':admin_openid' => $from_user, ':rid' => $rid));
 	if ($admin) {

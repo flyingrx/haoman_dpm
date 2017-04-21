@@ -173,6 +173,21 @@
            border: 1px solid;
            box-sizing: content-box;
        }
+       .ava_tap{
+           position: absolute;
+           right: 70px;
+           background-color: #fff;
+           display: none;
+           z-index: 4;
+       }
+       .ava_tap>a{
+           display: block;
+           padding:.4rem 1rem;
+           text-decoration: none;
+       }
+       .show{
+           display: block;
+       }
    </style>
 </head>
 <body>
@@ -530,7 +545,10 @@
         </div>
     </div>
 </div>
-
+<div class='ava_tap' id="ava_tap">
+    <a href='#' id="personal_gift">打赏</a>
+    <a href='#' id="personal_chat">私聊</a>
+</div>
 <div class="fl-template">
     <div class="fl-template-guest">
         <div class="fl-ds-guest" data-id="##id##" data-detail='##detail##'>
@@ -625,7 +643,6 @@
         $("#rulebox").hide();
         $("#markser").hide();
     }
-
 
 
     $("#button").click(function () {

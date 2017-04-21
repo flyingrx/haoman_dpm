@@ -6,7 +6,9 @@ $uniacid = $_W['uniacid'];
 if(DEBUG){
 	$nickname = '测试账号';
 	$avatar = '/addons/haoman_dpm/static/wedding_xys/lover/heart1.png';
+	$_W['openid']='123456';
 	$from_user = '123456';
+//	$from_user = '123456';
 	//print_r($rid);exit;
 	/*$insert = array(
         'uniacid' => 'sfefsfse',

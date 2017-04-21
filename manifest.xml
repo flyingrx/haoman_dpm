@@ -22,7 +22,7 @@
 	<bindings>
 		<menu>
 			<entry title="活动管理" do="manage" state="" direct="false" />
-			<entry title="嘉宾管理" do="jiabin" state="" direct="false" />
+			<!--<entry title="嘉宾管理" do="jiabin" state="" direct="false" />-->
 			<!--<entry title="现场抽奖奖品" do="code" state="" direct="false" />
 			<entry title="抽奖箱奖品" do="cjxcode" state="" direct="false" />
 			<entry title="大转盘奖品" do="dzp" state="" direct="false" />

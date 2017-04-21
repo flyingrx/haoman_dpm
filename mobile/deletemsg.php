@@ -7,7 +7,11 @@ $rid = intval($_GPC['rid']);
 $uid = $_GPC['uid'];
 $from_user = $_W['openid'];
 $uniacid = $_W['uniacid'];
+if(DEBUG){
+	$from_user='123456';
+}
 $admin = pdo_fetch("select id from " . tablename('haoman_dpm_bpadmin') . "  where admin_openid=:admin_openid and status=0 and rid=:rid ", array(':admin_openid' => $from_user, ':rid' => $rid));
+//var_dump($admin);exit;
 if ($admin || $uid == $from_user) {
 	$rule = pdo_fetch("select id from " . tablename('haoman_dpm_messages') . " where id = :id ", array(':id' => $id));
 	if (empty($rule)) {
