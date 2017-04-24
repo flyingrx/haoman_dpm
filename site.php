@@ -1540,8 +1540,8 @@ class haoman_dpmModuleSite extends WeModuleSite {
                 if($exits['guest_type']==2){
                     $guest_name = '第'.$exits['message'].'桌';
                 }else if($exits['guest_type']==3){
-                    $fans_nk = pdo_fetch("select * from " . tablename('haoman_dpm_fans') . " where id = " . $exits['message']);
-                    $guest_name = $fans_nk?'第'.$fans_nk['seat'].'桌：'.$fans_nk['nickname']:'用户ID：'.$exits['message'];
+                    $fans_nk = pdo_fetch("select * from " . tablename('haoman_dpm_fans') . " where from_user = " . $exits['message']);
+                    $guest_name = $fans_nk?($fans_nk['seat']?'第'.$fans_nk['seat'].'桌：'.$fans_nk['nickname']:$fans_nk['nickname']):'用户ID：'.$exits['message'];
                     pdo_update('haoman_dpm_fans', array('ds_times'=>$fans_nk['ds_times']+1), array('id'=>$exits['message']));
                 }
             }

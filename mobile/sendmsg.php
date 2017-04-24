@@ -5,6 +5,11 @@ global $_GPC, $_W;
 $rid = intval($_GPC['rid']);
 $uid = $_GPC['uid'];
 $uniacid = $_W['uniacid'];
+if(DEBUG){
+    $rid = 12;
+    $uid = '123456';
+    $uniacid = 2;
+}
 $fans = pdo_fetch("select * from " . tablename('haoman_dpm_fans') . " where rid = '" . $rid . "' and from_user='" . $uid . "'");
 $content = $_GPC['content'];
 $image = $_GPC['image'];

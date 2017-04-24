@@ -12,6 +12,7 @@ $item_list = pdo_fetchall("SELECT * FROM " . tablename('haoman_dpm_guest') . " W
 if ($guest_list && $item_list) {
 	foreach ($guest_list as $v){
 		$one['id'] = $v['id'];
+		$one['from_user'] = $v['from_user'];
 		$one['nickname'] = $v['nickname'];
 		$one['avatar'] = $v['avatar'];
 		$one['ds_times'] = $v['ds_times'];

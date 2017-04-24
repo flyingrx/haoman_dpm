@@ -283,6 +283,17 @@ CREATE TABLE IF NOT EXISTS `ims_haoman_dpm_fans` (
   KEY `indx_uniacid` (`uniacid`),
   KEY `indx_mobile` (`mobile`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+DROP TABLE IF EXISTS `ims_haoman_dpm_fans_vip`;
+CREATE TABLE `ims_haoman_dpm_fans_vip` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT '0',
+  `rid` int(10) unsigned DEFAULT '0',
+  `money` decimal(11,2) DEFAULT '0.00' COMMENT '霸屏金额',
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否开启',
+  `level` int(3) NOT NULL DEFAULT '0' COMMENT 'VIP等级',
+  `createtime` int(11) DEFAULT '0' COMMENT '创建的时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 CREATE TABLE IF NOT EXISTS `ims_haoman_dpm_guest` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `uniacid` int(10) NOT NULL,

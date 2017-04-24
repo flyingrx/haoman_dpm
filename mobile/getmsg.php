@@ -66,7 +66,7 @@ foreach($list as $k=>$v){
         $aa .='<div class="msg_box" id="msg_box_'.$v['id'].'" mId="'.$v['id'].'">';
     }
 
-    $aa .='<div class="avatar" style="background-image: url('.$v['avatar'].')" avatar="'.$v['avatar2'].'" nickname="'.$v['nickname'].'" uid="'.$v['from_user'].'"></div>';
+    $aa .='<div class="avatar" style="background-image: url('.$v['avatar'].')" avatar="'.$v['avatar2'].'" id="'.$v['id'].'" nickname="'.$v['nickname'].'" uid="'.$v['from_user'].'"></div>';
     $aa .='<div style="overflow: auto">';
     $aa .='<div class="nickname_line">';
     if($v['from_user']==$uid){

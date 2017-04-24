@@ -419,10 +419,10 @@
     <div class="userBoxCover">
         <div class="menu">
             <ul>
-                <!--<li class="ex、press_love">表白Ta</li>-->
-                <!--<li class="send_msg">私聊Ta</li>-->
-                <!--<li class="userTip">点击屏幕返回</li>-->
-                <li>点击屏幕返回</li>
+                <li class="express_love">表白Ta</li>
+                <li class="send_msg">私聊Ta</li>
+                <li class="userTip">点击屏幕返回</li>
+                <!--<li>点击屏幕返回</li>-->
 
             </ul>
         </div>
@@ -545,13 +545,13 @@
         </div>
     </div>
 </div>
-<div class='ava_tap' id="ava_tap">
+<!--<div class='ava_tap' id="ava_tap">
     <a href='#' id="personal_gift">打赏</a>
     <a href='#' id="personal_chat">私聊</a>
-</div>
+</div>-->
 <div class="fl-template">
     <div class="fl-template-guest">
-        <div class="fl-ds-guest" data-id="##id##" data-detail='##detail##'>
+        <div class="fl-ds-guest" data-id="##id##" data-detail='##detail##' data-fuser="##fuser##" >
             <img src="http://" class="fl-ds-guest-img"/>
             <p class="fl-ds-guest-name">##name##</p>
             <small class="fl-ds-guest-role">(##role##)</small>
@@ -621,6 +621,11 @@
                 $.tip('你在队列中第'+dl+'位','','error');
             },1000)
         }
+        $("#wall_window").on('click',function (e) {
+            if(e.target!=$("#ava_tap")[0]){
+                $("#ava_tap").hide();
+            }
+        })
     })
     function haobang(){
         location.href = "{php echo $this->createMobileUrl("haobang", array('rid' => $rid,'uid'=>$fans['from_user'],'type'=>'today'))}";
