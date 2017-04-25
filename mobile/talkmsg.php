@@ -2,6 +2,7 @@
 global $_GPC, $_W;
 $rid = intval($_GPC['rid']);
 $uid = $_GPC['uid'];
+$sid = $_GPC['sid'];
 $from_user = $_W['openid'];
 $maxid = $_GPC['maxid'];
 $lt = $_GPC['lt'];
@@ -33,7 +34,15 @@ if($bp['isbp']==1){
 }else{
     $ismbp=0;
 }
-$list = pdo_fetchall("SELECT * FROM " . tablename('haoman_dpm_messages') . " WHERE rid = :rid and uniacid = :uniacid and status = 1 and is_back !=1 and privateChat ='' and is_xy !=1 and id > :id and createtime > :createtime ORDER BY id desc limit 20",array(':rid'=>$rid,':uniacid'=>$uniacid,':id'=>$maxid,':createtime'=>$lt));
+//查询privateChat字段是两者拼接的消息
+if($uid&&$sid){
+    $arr = [];
+    array_push($arr,$uid,$acceptid);
+    sort($arr);
+    $chatChar = join(",",$arr);
+}
+
+$list = pdo_fetchall("SELECT * FROM " . tablename('haoman_dpm_messages') . " WHERE rid = :rid and uniacid = :uniacid and status = 1 and is_back !=1 and is_xy !=1 and privateChat=:chatChar and id > :id and createtime > :createtime ORDER BY id desc limit 20",array(':rid'=>$rid,':uniacid'=>$uniacid,':chatChar'=>$chatChar,':id'=>$maxid,':createtime'=>$lt));
 $minid = $list[0]['id'];
 $list = array_reverse($list);
 
@@ -134,7 +143,7 @@ foreach($list as $k=>$v){
 
     $aa .='</div>';
 
-    if (1 ==$isAdmin||$v['from_user']==$uid) {
+    /*if (1 ==$isAdmin||$v['from_user']==$uid) {
         //或才是，与是错的
         $aa .='<div class="admin_del_msgs">';
         if($v['from_user']==$uid){
@@ -150,7 +159,7 @@ foreach($list as $k=>$v){
 
 
         $aa .='</div>';
-    }
+    }*/
 
 
     $aa .='</div>';

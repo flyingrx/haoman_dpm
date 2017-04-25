@@ -27,8 +27,10 @@
 
         window.sysinfo = {
         {if !empty($_W['uniacid'])}'uniacid': '{$_W['uniacid']}',{/if}
-        {if !empty($_W['acid'])}'acid': '{$_W['acid']}',{/if}{if !empty($_W['openid'])}'openid': '{$_W['openid']}',{/if}
-        {if !empty($_W['uid'])}'uid': '{$_W['uid']}',{/if}
+        {if !empty($rid)}'rid': '{$rid}',{/if}
+        {if !empty($_W['acid'])}'acid': '{$_W['acid']}',{/if}
+        {if !empty($_W['openid'])}'openid': '{$_W['openid']}',{/if}
+        {if !empty($from_user)}'uid': '{$from_user}',{/if}
         'siteroot': '{$_W['siteroot']}',
                 'siteurl': '{$_W['siteurl']}',
                 'attachurl': '{$_W['attachurl']}',
@@ -107,11 +109,11 @@
     <!--<script type="text/javascript" src="/app/resource/components/LocalResizeIMG/lrz.bundle.js"></script>-->
     <div class="talk_main">
         <div class="talker_info" style="background-image: url('../addons/haoman_dpm/imgs/top_bg.png')">
-            <div class="avatar" style="background-image: url('http://wx.qlogo.cn/mmopen/lRNXgCtFOXSlDeL6N1hFRAAGW0oib3MLDHagDnYQB27nfTHNIrxrFIHuXmofQVulic1hEey9JF839BjFgcWq6hxpz7mZSyGOmX/132?x-oss-process=style/avatar')"></div>
+            <div class="avatar" style="background-image: url("localhost/{$receive['avatar']}");"></div>
             <div class="scoll_show">
-                <div class="nickname">Pakho8ZHAO</div>
+                <div class="nickname">{$receive['nickname']}</div>
                 <div class="talker_tags man">
-                    <span class="gender">帅哥</span>
+                    <span class="gender">{if $receive['sex'] == '1'} 帅哥 {else} 美女 {/if}</span>
                   </div>
             </div>
             <span class="close am-icon-times-circle"></span>
@@ -155,10 +157,11 @@
 </div>
 <script>
     $(function(){
-        $(".talk_panel").party_talk_panel(345977);
+        var sid = "{$receive['from_user']}";
+        $(".talk_panel").party_talk_panel(sid);
         $(".talk_panel .close").click(function(){
-                            history.go(-1);
-                    });
+          history.go(-1);
+        });
     })
 </script>
 </body>

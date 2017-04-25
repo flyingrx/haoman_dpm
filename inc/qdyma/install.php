@@ -451,6 +451,7 @@ CREATE TABLE IF NOT EXISTS `ims_haoman_dpm_messages` (
   `bptime` int(11) unsigned NOT NULL DEFAULT '0',
   `says` varchar(300) DEFAULT '',
   `createtime` int(11) unsigned NOT NULL DEFAULT '0',
+  `privateChat` VARCHAR(20) NOT NULL COMMENT '私聊双方ID' ;
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 CREATE TABLE IF NOT EXISTS `ims_haoman_dpm_mp4` (

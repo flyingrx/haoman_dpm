@@ -1,6 +1,6 @@
 <?php
 global $_GPC, $_W;
-$rid = intval($_GPC['id']);
+$rid = intval($_GPC['rid']);
 $uniacid = $_W['uniacid'];
 if(DEBUG){
     $nickname = '测试账号';
@@ -98,6 +98,7 @@ if(empty($from_user)){
 
 //检测是否为空
 $fans = pdo_fetch("select * from " . tablename('haoman_dpm_fans') . " where rid = '" . $rid . "' and from_user='" . $from_user . "'");
+$receive = pdo_fetch("select * from " . tablename('haoman_dpm_fans') . " where rid = '" . $rid . "' and from_user='" . $_GPC['sid'] . "'");
 if ($fans == false) {
 	header("HTTP/1.1 301 Moved Permanently");
 	header("Location: " . $this->createMobileUrl('information', array('id' => $rid,'from_user'=>$page_from_user)) . "");

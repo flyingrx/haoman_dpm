@@ -13,7 +13,17 @@ if(DEBUG){
 $fans = pdo_fetch("select * from " . tablename('haoman_dpm_fans') . " where rid = '" . $rid . "' and from_user='" . $uid . "'");
 $content = $_GPC['content'];
 $image = $_GPC['image'];
-$insert = array('uniacid' => $uniacid, 'avatar' => $fans['avatar'], 'nickname' => $fans['nickname'], 'from_user' => $fans['from_user'], 'word' => $content, 'wordimg' => $image, 'rid' => $rid, 'status' => 1, 'is_back' => $fans['is_back'], 'is_xy' => 0, 'is_bp' => 0, 'type' => 0, 'gift' => 0, 'createtime' => time());
+$acceptid = $_GPC['acceptid'];
+
+//双方uid/from_user进行拼接
+if($uid&&$acceptid){
+    $arr = [];
+    array_push($arr,$uid,$acceptid);
+    sort($arr);
+    $chatChar = join(",",$arr);
+}
+
+$insert = array('uniacid' => $uniacid, 'avatar' => $fans['avatar'], 'nickname' => $fans['nickname'], 'from_user' => $fans['from_user'], 'word' => $content, 'wordimg' => $image, 'rid' => $rid, 'status' => 1, 'is_back' => $fans['is_back'], 'is_xy' => 0, 'is_bp' => 0, 'type' => 0, 'gift' => 0, 'createtime' => time(),'privateChat' => $chatChar);
 $temp = pdo_insert('haoman_dpm_messages', $insert);
 $result = array('code' => 1, 'data' => "提交成功！");
 $this->message($result);

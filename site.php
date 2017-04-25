@@ -1777,6 +1777,9 @@ class haoman_dpmModuleSite extends WeModuleSite {
     public function doMobilesendmsg(){
         $this->__mobile(__FUNCTION__);
     }
+    public function doMobileTalkmsg(){
+        $this->__mobile(__FUNCTION__);
+    }
 
     public function doMobileGetHistoryMsg(){
         $this->__mobile(__FUNCTION__);
