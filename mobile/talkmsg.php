@@ -37,7 +37,7 @@ if($bp['isbp']==1){
 //查询privateChat字段是两者拼接的消息
 if($uid&&$sid){
     $arr = [];
-    array_push($arr,$uid,$acceptid);
+    array_push($arr,$uid,$sid);
     sort($arr);
     $chatChar = join(",",$arr);
 }
